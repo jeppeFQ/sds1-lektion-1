@@ -1,0 +1,76 @@
+.pyodide-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: Arial, sans-serif;
+  }
+  
+  .status-loading { background: #ff9800; color: white; }
+  .status-ready { background: #4caf50; color: white; }
+  .status-error { background: #f44336; color: white; }
+  
+  .code-container {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .code-input { flex: 1; }
+  
+  .code-output {
+    flex: 1;
+    background: transparent;
+    padding: 25px;
+    border: none;
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: 13px;
+    border-radius: 0;
+    min-height: 0;
+    color: inherit;
+  }
+  
+  .python-editor {
+    width: 85%;
+    height: 180px;
+    font-family: monospace;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 4px;
+  }
+  
+  .run-button {
+    background: transparent;
+    border: none;
+    padding: 2px 2px;
+    cursor: pointer;
+    border-radius: 1px;
+    font-size: 14px;
+    margin-top: 0px;
+  }
+  
+  .run-button:hover:not(:disabled) {
+    background: transparent;
+  }
+  
+  .run-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .reset-button {
+    background: transparent;
+    border: none;
+    padding: 2px 2px;
+    cursor: pointer;
+    border-radius: 1px;
+    font-size: 14px;
+    margin-left: 330px;
+  }

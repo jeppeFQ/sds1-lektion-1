@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html#kodning",
+    "href": "index.html#kodning",
+    "title": "Første møde med Python og UCloud",
+    "section": "Kodning?! 🐍",
+    "text": "Kodning?! 🐍\n\nHvad er jeres erfaring (hvis I har nogen)?\nHvordan forstår i “kodning”; hvorfor bruger vi ikke bare Excel eller lign.?\nHvis I har erfaring; er det en god erfaring? Hvordan lærte i det bedst; hvad var svært?"
+  },
+  {
+    "objectID": "index.html#kodning-vs.-excel",
+    "href": "index.html#kodning-vs.-excel",
+    "title": "Første møde med Python og UCloud",
+    "section": "“Kodning” vs. Excel",
+    "text": "“Kodning” vs. Excel\nReproducerbar, skalerbar og fleksibel!\nNår Excel kommer til kort:\n\nAnalysere 100.000-vis af rækker data\nGentage den samme analyse hver [dag/måned/år] med nye data\nDokumentere præcist, hvad du har gjort, så en kollega kan gentage det\nKombinere data fra [mange] forskellige kilder\nLave avancerede statistiske modeller"
+  },
+  {
+    "objectID": "index.html#python-et-kodesprog",
+    "href": "index.html#python-et-kodesprog",
+    "title": "Første møde med Python og UCloud",
+    "section": "Python; et kodesprog",
+    "text": "Python; et kodesprog\nTænk på det som et meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\n# Læs data fra fil (uden specialicerede biblioteker)\nwith open(\"resources/sales_data.csv\", \"r\", encoding=\"utf-8\") as file:\n    lines = file.readlines()\n\n# Parse CSV data manuelt\nheader = lines[0].strip().split(\",\")\ndata = []\nfor line in lines[1:]:\n    row = line.strip().split(\",\")\n    data.append(row)"
+  }
+]

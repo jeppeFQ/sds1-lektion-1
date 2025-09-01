@@ -1,0 +1,77 @@
+---
+title: "Første møde med Python og UCloud"
+subtitle: ""
+author: "Jeppe Fjeldgaard Qvist"
+date: today
+format: 
+  revealjs:
+    include-after-body: "/Users/jeppefl/Library/CloudStorage/OneDrive-AalborgUniversitet/01_work/undervisning/udvikling-it/slides/lektion-1/resources/timer.html"
+    slide-number: c
+    show-slide-number: print
+    embed-resources: true
+    self-contained-math: true
+    smaller: true
+    scrollable: true
+    theme: default
+    include-in-header: 
+      - text: |
+          <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+          <link rel="stylesheet" href="resources/pyodide-styles.css">
+          <script src="resources/pyodide-setup.js"></script>
+---
+
+## Kodning?! 🐍
+
+- Hvad er jeres erfaring (hvis I har nogen)? 
+
+- Hvordan forstår i "kodning"; hvorfor bruger vi ikke bare Excel eller lign.? 
+
+- Hvis I har erfaring; er det en god erfaring? Hvordan lærte i det bedst; hvad var svært? 
+
+<span class="timer" data-time="300"></span>
+
+## "Kodning" vs. Excel 
+
+### *Reproducerbar*, *skalerbar* og *fleksibel*!
+
+Når Excel kommer til kort: 
+
+- Analysere 100.000-vis af rækker data
+
+- Gentage den samme analyse hver [dag/måned/år] med nye data
+
+- Dokumentere præcist, hvad du har gjort, så en kollega kan gentage det
+
+- Kombinere data fra [mange] forskellige kilder
+
+- Lave avancerede statistiske modeller
+
+## Python; et kodesprog 
+
+Tænk på det som et *meget detaljeret* opskrift. Så fremfor en abstract "bland ingredienserne" (Excel; peg-og-klik), skriver vi: 
+
+<div class="code-container">
+<div class="code-input">
+<textarea class="python-editor" id="code1">
+
+# Læs data fra fil (uden specialicerede biblioteker)
+with open("/Users/jeppefl/Library/CloudStorage/OneDrive-AalborgUniversitet/01_work/undervisning/sds1/lektion-1/resources/sales_data.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+# Parse CSV data manuelt
+header = lines[0].strip().split(",")
+data = []
+for line in lines[1:]:
+    row = line.strip().split(",")
+    data.append(row)
+
+</textarea>
+<button class="run-button" onclick="runPython(document.getElementById('code1').value, 'output1')">
+  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
+</button>
+<button class="reset-button" onclick="resetPythonGlobals()">
+  <img src="resources/dust.png" alt="Python" style="height: 50px;">
+</button>
+</div>
+<div class="code-output" id="output1"></div>
+</div>
