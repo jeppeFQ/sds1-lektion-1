@@ -11,35 +11,35 @@
     "href": "index.html#kodning-vs.-excel",
     "title": "Første møde med Python og UCloud",
     "section": "“Kodning” vs. Excel",
-    "text": "“Kodning” vs. Excel\nReproducerbar, skalerbar, fleksibel og automatisering!\nNår Excel kommer til kort:\n\nAnalysere 100.000-vis af rækker data\nGentage den samme analyse hver [dag/måned/år] med nye data\n\nI Excel [eller lign.], hvis data ændrer sig, skal du gentage alle klik.\n\nDokumentere præcist, hvad du har gjort, så en kollega kan gentage det\nKombinere data fra [mange] forskellige kilder\nLave avancerede statistiske modeller"
+    "text": "“Kodning” vs. Excel\nReproducerbar, skalerbar, fleksibel og automatisering!\nNår Excel kommer til kort:\n\nAnalysere 100.000-vis af rækker data.\nGentage den samme analyse hver [dag/måned/år] med nye data.\n\nI Excel: hvis data ændrer sig, skal vi gentage alle klik.\n\nDokumentere præcist, hvad vi har gjort, så en kollega kan gentage det.\nKombinere data fra [mange] forskellige kilder.\nLave avancerede statistiske modeller."
   },
   {
     "objectID": "index.html#python-et-kodesprog",
     "href": "index.html#python-et-kodesprog",
     "title": "Første møde med Python og UCloud",
     "section": "Python; et kodesprog",
-    "text": "Python; et kodesprog\n\nTænk på kodning som et meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\nimport pandas as pd\n\n# Hent data fra URL\nfrom io import StringIO\nurl = \"https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/sales_data.csv\"\n\ndata = pd.read_csv(StringIO(csv_data))\n\n# Beregn gennemsnit for hver måned\nmonthly_average = data.groupby('month')['sales'].mean()\nprint(\"\\nMånedlige gennemsnit:\")\nprint(monthly_average)"
+    "text": "Python; et kodesprog\n\nTænk på kodning som et meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\nimport pandas as pd\n\n# Hent data fra URL\nfrom io import StringIO\nurl = \"https://tinyurl.com/3p843y7k\"\n\ndata = pd.read_csv(StringIO(csv_data))\n\n# Beregn gennemsnit for hver måned\nmonthly_average = data.groupby('month')['sales'].mean()\n\nprint(\"\\nMånedlige gennemsnit:\")\nprint(monthly_average)"
   },
   {
     "objectID": "index.html#reproducerbar",
     "href": "index.html#reproducerbar",
     "title": "Første møde med Python og UCloud",
     "section": "Reproducerbar",
-    "text": "Reproducerbar\n\nHvordan fik du resultatet?\n\nmonthly_average = data.groupby('month')['sales'].mean()\nAlle trin i koden er en komplet log over hvad du har gjort ved dataen for at få dit output. Når næste års data kommer, ændres blot url = \"https://....\" til den nye data og det hele køres igen."
+    "text": "Reproducerbar\n\nHvordan fik du resultatet?\n\nmonthly_average = data.groupby('month')['sales'].mean()\nAlle trin i koden er en komplet log over hvad du har gjort ved dataen for at få dit output.\nNår næste års data kommer, ændres blot url = \"https://....\" til den nye data og det hele køres igen."
   },
   {
     "objectID": "index.html#skalerbarhed",
     "href": "index.html#skalerbarhed",
     "title": "Første møde med Python og UCloud",
     "section": "Skalerbarhed",
-    "text": "Skalerbarhed\nDen samme kode, der arbejder med 100 rækker, kan håndtere 1 million rækker uden problemer."
+    "text": "Skalerbarhed\nDen samme kode, der arbejder med 100 rækker, kan håndtere millioner af rækker uden problemer. (Flere rækker betyder dog logisk nok mere computerkraft og tid)"
   },
   {
     "objectID": "index.html#fleksibilitet",
     "href": "index.html#fleksibilitet",
     "title": "Første møde med Python og UCloud",
     "section": "Fleksibilitet",
-    "text": "Fleksibilitet\nPython har tusindvis af specialiserede “værktøjskasser” (biblioteker) til alt fra grundlæggende statistik og datahåndtering til kunstig intelligens."
+    "text": "Fleksibilitet\nPython har tusindvis af specialiserede “værktøjskasser” (biblioteker) til alt fra grundlæggende statistik og datahåndtering til machine learning og kunstig intelligens."
   },
   {
     "objectID": "index.html#automatisering",
@@ -53,49 +53,56 @@
     "href": "index.html#kodning-kommunikation-med-maskinen",
     "title": "Første møde med Python og UCloud",
     "section": "Kodning: Kommunikation med maskinen",
-    "text": "Kodning: Kommunikation med maskinen\n\nKodning skal være utvetydigt og logisk struktureret\nI skal på kurset oparbejde en algoritmisk tænkning.\n\nDekomposition: Bryde komplekse problemer ned i mindre, håndterbare dele\nMønstergenkendelse: Identificere ligheder på tværs af forskellige problemer\nAbstraktion: Fokusere på de væsentlige aspekter og ignorere irrelevante detaljer\nAlgoritmedesign: Step-by-step løsninger der kan automatiseres"
+    "text": "Kodning: Kommunikation med maskinen\nKodning skal være utvetydigt og logisk struktureret for at maskine “forstår” os.\nI skal på kurset oparbejde en algoritmisk tænkning."
   },
   {
     "objectID": "index.html#hvorfor-python",
     "href": "index.html#hvorfor-python",
     "title": "Første møde med Python og UCloud",
-    "section": "Hvorfor Python 🐍",
-    "text": "Hvorfor Python 🐍\n\n(Relativt) simpelt.\nStor brugerbase.\nOmfattende biblioteker til alle forskningsområder."
+    "section": "Hvorfor Python? 🐍",
+    "text": "Hvorfor Python? 🐍\n\n(Relativt) simpelt.\nStor brugerbase.\nOmfattende biblioteker til alle forskningsområder."
   },
   {
-    "objectID": "index.html#python-tanke-til-handling",
-    "href": "index.html#python-tanke-til-handling",
+    "objectID": "index.html#kodning-af-en-tanke-til-handling-i-4-niveauer",
+    "href": "index.html#kodning-af-en-tanke-til-handling-i-4-niveauer",
     "title": "Første møde med Python og UCloud",
-    "section": "Python: Tanke til handling",
-    "text": "Python: Tanke til handling"
+    "section": "Kodning af en tanke til handling i 4 niveauer",
+    "text": "Kodning af en tanke til handling i 4 niveauer"
   },
   {
     "objectID": "index.html#niveau-1-menneskelig-tanke",
     "href": "index.html#niveau-1-menneskelig-tanke",
     "title": "Første møde med Python og UCloud",
     "section": "Niveau 1: Menneskelig tanke",
-    "text": "Niveau 1: Menneskelig tanke\n“Jeg vil gerne finde gennemsnittet af mine salgstal”"
+    "text": "Niveau 1: Menneskelig tanke\n\n“Jeg vil finde gennemsnittet af mine salgstal”"
   },
   {
     "objectID": "index.html#niveau-2-algoritmisk-tænkning",
     "href": "index.html#niveau-2-algoritmisk-tænkning",
     "title": "Første møde med Python og UCloud",
     "section": "Niveau 2: Algoritmisk tænkning",
-    "text": "Niveau 2: Algoritmisk tænkning\n“Læg alle tallene sammen, divider med antallet af tal”\n\\[\n\\bar{x} = \\frac{x_1 + x_2 + x_3 + \\ldots + x_n}{n} = \\frac{\\sum_{i=1}^{n} x_i}{n}\n\\]"
+    "text": "Niveau 2: Algoritmisk tænkning\n\n“Læg alle tallene sammen, divider med antallet af tal”\n\n\n\\[\n\\bar{x} = \\frac{x_1 + x_2 + x_3 + \\ldots + x_n}{n} = \\frac{\\sum_{i=1}^{n} x_i}{n}\n\\]"
   },
   {
     "objectID": "index.html#niveau-3-python-kode",
     "href": "index.html#niveau-3-python-kode",
     "title": "Første møde med Python og UCloud",
     "section": "Niveau 3: Python-kode",
-    "text": "Niveau 3: Python-kode\n\n\ntotal = sum(data['sales'])  \n\ngennemsnit = total / len(data['sales'])\n\nprint(f\"Total salg: {total}\")\nprint(f\"Gennemsnit: {gennemsnit}\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\text{total} = \\sum_{i=1}^{n} \\text{sales}_i\\)\n\\(\\text{gennemsnit} = \\frac{\\text{total}}{n} = \\frac{\\sum_{i=1}^{n} \\text{sales}_i}{n}\\)\n\nHvor \\(n\\) er antallet af salgstal i datasættet."
+    "text": "Niveau 3: Python-kode\n\n\ntotal = sum(data['sales'])  \n\ngennemsnit = total / len(data['sales'])\n\nprint(f\"Total salg: {total}\")\nprint(f\"Gennemsnit: {gennemsnit}\")\n\n\n\n\n\n\n\n\n\n\n\n\n\nHvad har vi implementeret her:\n\n\\(\\text{total} = \\sum_{i=1}^{n} \\text{sales}_i\\)\n\\(\\text{gennemsnit} = \\frac{\\text{total}}{n} = \\frac{\\sum_{i=1}^{n} \\text{sales}_i}{n}\\), Hvor \\(n\\) er antallet af salgstal i datasættet.\nUdskriv resultatet"
   },
   {
     "objectID": "index.html#niveau-4-maskinsprog",
     "href": "index.html#niveau-4-maskinsprog",
     "title": "Første møde med Python og UCloud",
     "section": "Niveau 4: Maskinsprog",
-    "text": "Niveau 4: Maskinsprog\nLOAD data\nADD all values\nDIVIDE by count\nSTORE result"
+    "text": "Niveau 4: Maskinsprog\nMaskinen forstår ikke Python (?!)\n\nComputeren forstår kun maskinkode. Hvilket er lavniveau instruktioner bestående af \\(1\\)-taller og \\(0\\)’er (binary), som CPU’en kan arbejde med.\nPython fortolkeren oversætter altså koden til noget som maskinen kan forstå: og Python er muligt nemmere at læse for mennesker end maskinkode.\nDenne oversættelse forgår i en mellemform (assembly-sprog), der er meget mere besværligt at arbejde med end Python, a la:\n\nLOAD data\nADD all values\nDIVIDE by count\nSTORE result\nSom I maskinkode kunne se således ud:\n10110000 01100001"
+  },
+  {
+    "objectID": "index.html#præcision-er-nøglen",
+    "href": "index.html#præcision-er-nøglen",
+    "title": "Første møde med Python og UCloud",
+    "section": "Præcision er nøglen!",
+    "text": "Præcision er nøglen!\n\n“Kan du hente en kop kaffen?”\n\nVi forstår implicit: Gå ud i køkkenet, tag en kop, hæld kaffe i koppen, kom tilbage.\nOversat til eksplicitte instruktioner:\n\ncup = get_cup_from_kitchen()\ncoffee = pour_coffee(cup)\nreturn coffee_to_desk(cup)"
   },
   {
     "objectID": "index.html#præcise-instrukser",
@@ -109,42 +116,35 @@
     "href": "index.html#variable-og-pythons-hukommelse",
     "title": "Første møde med Python og UCloud",
     "section": "Variable og Pythons hukommelse",
-    "text": "Variable og Pythons hukommelse\ndata har virket flere steder i vores kode, selvom vi kun har indlæst den én gang.\n\n\npris = 100\n\nmoms = pris * 0.25\n\ntotal = pris + moms\n\nprint(total)"
+    "text": "Variable og Pythons hukommelse\nBemærk: data har virket flere steder i vores kode, selvom vi kun har indlæst den én gang.\n\n\npris = 100\n\nmoms = pris * 0.25\n\ntotal = pris + moms\n\nprint(total)"
   },
   {
     "objectID": "index.html#funktioner-genanvendelige-opskrifter",
     "href": "index.html#funktioner-genanvendelige-opskrifter",
     "title": "Første møde med Python og UCloud",
     "section": "Funktioner: Genanvendelige “opskrifter”",
-    "text": "Funktioner: Genanvendelige “opskrifter”\nDefination af funktioner svarer til at lære maskinen en ny “kommando”. Nu kan vi sige beregn_moms(100) og maskinen ved præcist, hvad den skal gøre, fordi vi har defineret hver eneste trin.\n\n\ndef beregn_moms(pris, moms_sats=0.25):\n    return pris * moms_sats"
+    "text": "Funktioner: Genanvendelige “opskrifter”\nDefination af funktioner svarer til at lære maskinen en ny “kommando”. Nu kan vi sige beregn_moms(tal) og maskinen ved præcist, hvad den skal gøre, fordi vi har defineret hver eneste trin.\n\n\ndef beregn_moms(pris, moms_sats=0.25):\n    return pris * moms_sats"
   },
   {
     "objectID": "index.html#den-fundamentale-erkendelse-om-maskiner",
     "href": "index.html#den-fundamentale-erkendelse-om-maskiner",
     "title": "Første møde med Python og UCloud",
     "section": "Den fundamentale erkendelse om maskiner",
-    "text": "Den fundamentale erkendelse om maskiner\nMaskiner er utroligt dumme men utroligt hurtige og pålidelige. De kan kun gøre simple ting som:\n\nGemme tal\nSammenligne værdier\nHoppe til forskellige dele af koden\nGentage instruktioner\n\nMen de kan gøre disse simple ting milliarder af gange per sekund uden fejl.\nKodningens kunst ligger i at bryde komplekse menneskelige problemer ned til disse simple operationer og derefter komponere dem sammen til kraftfulde løsninger."
+    "text": "Den fundamentale erkendelse om maskiner\nMaskiner er utroligt dumme men utroligt hurtige og pålidelige. De kan kun gøre simple ting som:\n\nGemme tal\nSammenligne værdier\nHoppe til forskellige dele af koden\nGentage instruktioner\n\nMen de kan gøre disse simple ting milliarder af gange per sekund uden fejl.\n\nKodningens kunst ligger i at bryde komplekse menneskelige problemer ned til disse simple operationer og derefter komponere dem sammen til kraftfulde løsninger."
   },
   {
-    "objectID": "index.html#computational-social-science-digitale-metoder-til-kriminalitetsforståelse",
-    "href": "index.html#computational-social-science-digitale-metoder-til-kriminalitetsforståelse",
+    "objectID": "index.html#computational-social-science",
+    "href": "index.html#computational-social-science",
     "title": "Første møde med Python og UCloud",
-    "section": "Computational Social Science (Digitale metoder til kriminalitetsforståelse)",
-    "text": "Computational Social Science (Digitale metoder til kriminalitetsforståelse)\nVi flytter fra små, lokale undersøgelser til analyser af massive datasæt der kan afsløre mønstre, vi aldrig kunne se før.\n\n\nTraditionel tilgang: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå recidiv-mønstre.\nComputational tilgang: Analyser alle \\(n\\) millioner straffesager fra de sidste 20 år og identificer præcise risikofaktorer for tilbagefald.\n\n\n\n\n# Find recidiv-mønstre i nationale registre\nurl = \"https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/straffesager_1990_2024.csv\"\n\nrecidiv_data = pd.read_csv(url)\n\nrisiko_faktorer = recidiv_data.groupby(['krimtype', 'tidligere_domme']).agg({\n    'dage_til_tilbagefald': 'median'\n})\n\nprint(risiko_faktorer)"
+    "section": "Computational Social Science",
+    "text": "Computational Social Science\nEks.: Digitale metoder til kriminalitetsforståelse\nVi flytter fra små, lokale undersøgelser til analyser af massive datasæt der kan afsløre mønstre, vi aldrig kunne se før.\n\n\nTraditionel tilgang: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå recidiv-mønstre.\nComputational tilgang: Analyser alle \\(n\\) millioner straffesager fra de sidste 20 år og identificer risikofaktorer for tilbagefald.\n\n\n\n\n# Find tilbagefalds-mønstre i nationale registre\nurl = \"https://tinyurl.com/3ja8pcfv\"\n\nrecidiv_data = pd.read_csv(url)\n\nrisiko_faktorer = recidiv_data.groupby(['krimtype', 'tidligere_domme']).agg({\n    'dage_til_tilbagefald': 'median'\n})\n\nprint(risiko_faktorer)"
   },
   {
     "objectID": "index.html#spatial-kriminologi-når-kriminalitet-data-får-koordinater",
     "href": "index.html#spatial-kriminologi-når-kriminalitet-data-får-koordinater",
     "title": "Første møde med Python og UCloud",
     "section": "Spatial kriminologi: Når kriminalitet [data] får koordinater",
-    "text": "Spatial kriminologi: Når kriminalitet [data] får koordinater\n\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom sklearn.cluster import DBSCAN\nfrom io import StringIO\n\nurl = \"https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/copenhagen_crime_2024.csv\"\ncrime_data = pd.read_csv(url)  \n\ncoords = crime_data[['latitude', 'longitude']]\nclusters = DBSCAN(eps=0.005, min_samples=2).fit(coords)\n\n# Visualiser på kort\nfig, ax = plt.subplots(figsize=(12, 8))\n\nscatter = ax.scatter(crime_data['longitude'], crime_data['latitude'], \n                    c=clusters.labels_, cmap='viridis', \n                    alpha=0.7, s=60, edgecolors='black', linewidth=0.5)\n\nax.set_xlabel('Longitude')\nax.set_ylabel('Latitude')\nax.set_title('København Kriminalitets Hot Spots\\n(Farver viser clusters)')\nax.grid(True, alpha=0.3)\n\n# Tilføj colorbar\ncbar = plt.colorbar(scatter)\ncbar.set_label('Cluster ID (-1 = støj/outliers)')\n\nplt.tight_layout()\nplt.show()"
-  },
-  {
-    "objectID": "index.html#netværksanalyse-kriminelle-organisationer-data-som-grafer",
-    "href": "index.html#netværksanalyse-kriminelle-organisationer-data-som-grafer",
-    "title": "Første møde med Python og UCloud",
-    "section": "Netværksanalyse: Kriminelle organisationer [data] som grafer",
-    "text": "Netværksanalyse: Kriminelle organisationer [data] som grafer\n\n\nimport networkx as nx\n\n# Byg netværk af kriminelle forbindelser\nG = nx.Graph()\nfor _, row in arrest_data.iterrows():\n    G.add_edge(row['person1'], row['person2'], \n               weight=row['co_arrests'])\n\n# Find centrale figurer i netværket\ncentrality = nx.betweenness_centrality(G)\nkey_players = sorted(centrality.items(), \n                    key=lambda x: x[1], reverse=True)[:10]\n\n# Simuler effekt af at arrestere nøglepersoner\noriginal_components = nx.number_connected_components(G)\nG.remove_nodes_from([player[0] for player in key_players[:3]])\nnew_components = nx.number_connected_components(G)"
+    "text": "Spatial kriminologi: Når kriminalitet [data] får koordinater\n\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom sklearn.cluster import DBSCAN\nfrom io import StringIO\n\nurl = \"https://tinyurl.com/4r8tj95v\"\ncrime_data = pd.read_csv(url)  \n\ncoords = crime_data[['latitude', 'longitude']]\nclusters = DBSCAN(eps=0.005, min_samples=2).fit(coords)\n\n# Visualiser på kort\nfig, ax = plt.subplots(figsize=(12, 8))\n\nscatter = ax.scatter(crime_data['longitude'], crime_data['latitude'], \n                    c=clusters.labels_, \n                    cmap='viridis', \n                    alpha=0.7, \n                    s=60, \n                    edgecolors='black', \n                    linewidth=0.5)\n\nax.set_xlabel('Longitude')\nax.set_ylabel('Latitude')\nax.set_title('København Kriminalitets Hot Spots\\n(Farver viser clusters)')\nax.grid(True, alpha=0.3)\n\n# Tilføj colorbar\ncbar = plt.colorbar(scatter)\ncbar.set_label('Cluster ID (-1 = støj/outliers)')\n\nplt.tight_layout()\nplt.show()"
   },
   {
     "objectID": "index.html#predictive-policing-algoritmer-der-forudsiger-data-kriminalitet",
@@ -154,24 +154,17 @@
     "text": "Predictive Policing: Algoritmer der forudsiger [data] kriminalitet\n\n\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Features: vejr, tid, lokation, historiske data\nfeatures = ['temperature', 'hour', 'day_of_week', 'previous_crimes_30days', \n           'unemployment_rate', 'distance_to_school']\n\n# Train model til at forudsige risiko for kriminalitet\nmodel = RandomForestClassifier(n_estimators=100)\nmodel.fit(historical_data[features], historical_data['crime_occurred'])\n\n# Forudsig risiko for i morgen\ntomorrow_risk = model.predict_proba(tomorrow_data[features])\nhigh_risk_areas = tomorrow_data[tomorrow_risk[:, 1] &gt; 0.7]"
   },
   {
-    "objectID": "index.html#text-mining-analysere-millioner-af-text-politirapporter",
-    "href": "index.html#text-mining-analysere-millioner-af-text-politirapporter",
+    "objectID": "index.html#cloud-computing-and-hpc",
+    "href": "index.html#cloud-computing-and-hpc",
     "title": "Første møde med Python og UCloud",
-    "section": "Text Mining: Analysere millioner af [text] politirapporter",
-    "text": "Text Mining: Analysere millioner af [text] politirapporter\n\n\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.cluster import KMeans\n\n# Indlæs 500,000 politirapporter\nreports = pd.read_csv(\"police_reports_2020_2024.csv\")\n\n# Identificer mønstre i rapporttekster\nvectorizer = TfidfVectorizer(max_features=1000, stop_words='danish')\ntext_vectors = vectorizer.fit_transform(reports['report_text'])\n\n# Cluster lignende kriminalitetstyper\nkmeans = KMeans(n_clusters=15)\nclusters = kmeans.fit_predict(text_vectors)\n\n# Find mest karakteristiske ord for hver cluster\nfeature_names = vectorizer.get_feature_names_out()\nfor i in range(15):\n    cluster_center = kmeans.cluster_centers_[i]\n    top_words = [feature_names[j] for j in cluster_center.argsort()[-10:]]\n    print(f\"Cluster {i}: {', '.join(top_words)}\")"
+    "section": "Cloud computing and HPC",
+    "text": "Cloud computing and HPC\n\nHPC: At bruge mange kraftige computere, som er koblet sammen i store klynger (clusters), til at løse komplekse og krævende opgaver.\nCloud computing: Adgang til computerressourcer (fx programmer, lagerplads og regnekraft) via internettet, fremfor at have det hele installeret på sin egen computer.\nUCloud: En dansk platform udviklet af Syddansk Universitet (SDU) og Aalborg Universitet (AAU). Den gør det muligt for forskere, undervisere og studerende at udnytte HPC-ressourcer på en enkel måde.\n\nKøre programmer uden installation: UCloud tilbyder et bibliotek af applikationer (fx RStudio, Jupyter Notebooks, MATLAB, Stata, Python, osv.), som kan startes direkte i browseren.\nBrug HPC-ressourcer: Når du starter en applikation, vælger du selv hvor meget regnekraft (CPU, GPU, RAM) du har brug for. Du arbejder stadig i en browser, men beregningen sker på en HPC-klynge.\nDatahåndtering: Du kan uploade, downloade og organisere dine data direkte i UCloud. Der er også muligheder for sikker deling af data med kolleger.\nSamarbejde: Projekter i UCloud kan deles med andre brugere, så man kan arbejde på de samme data og applikationer."
   },
   {
-    "objectID": "index.html#de-store-spørgsmål-etik-og-bias",
-    "href": "index.html#de-store-spørgsmål-etik-og-bias",
+    "objectID": "index.html#ucloud-i-praksis",
+    "href": "index.html#ucloud-i-praksis",
     "title": "Første møde med Python og UCloud",
-    "section": "De store spørgsmål: Etik og bias",
-    "text": "De store spørgsmål: Etik og bias"
-  },
-  {
-    "objectID": "index.html#section",
-    "href": "index.html#section",
-    "title": "Første møde med Python og UCloud",
-    "section": "1",
-    "text": "1"
+    "section": "UCLoud i praksis",
+    "text": "UCLoud i praksis\n\nLog ind med WAYF (din universitetslogin).\nVælg et projekt: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.\nStart en applikation: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.\nArbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.\nGem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer."
   }
 ]

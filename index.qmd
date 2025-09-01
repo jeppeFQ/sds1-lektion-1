@@ -36,17 +36,17 @@ format:
 
 Når Excel kommer til kort: 
 
-- Analysere 100.000-vis af rækker data
+- Analysere 100.000-vis af rækker data.
 
-- Gentage den samme analyse hver [dag/måned/år] med nye data
+- Gentage den samme analyse hver [dag/måned/år] med nye data.
 
-  - I Excel [eller lign.], hvis data ændrer sig, skal du gentage alle klik.
+  - I Excel: hvis data ændrer sig, skal vi gentage alle klik.
 
-- Dokumentere præcist, hvad du har gjort, så en kollega kan gentage det
+- Dokumentere præcist, hvad vi har gjort, så en kollega kan gentage det.
 
-- Kombinere data fra [mange] forskellige kilder
+- Kombinere data fra [mange] forskellige kilder.
 
-- Lave avancerede statistiske modeller
+- Lave avancerede statistiske modeller.
 
 ## Python; et kodesprog 
 
@@ -62,12 +62,13 @@ import pandas as pd
 
 # Hent data fra URL
 from io import StringIO
-url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/sales_data.csv"
+url = "https://tinyurl.com/3p843y7k"
 
 data = pd.read_csv(StringIO(csv_data))
 
 # Beregn gennemsnit for hver måned
 monthly_average = data.groupby('month')['sales'].mean()
+
 print("\nMånedlige gennemsnit:")
 print(monthly_average)
 
@@ -90,38 +91,47 @@ print(monthly_average)
 
 `monthly_average = data.groupby('month')['sales'].mean()`
 
-*Alle trin i koden er en komplet **log** over hvad du har gjort ved dataen for at få dit output*. Når næste års data kommer, ændres blot `url = "https://...."` til den nye data og det hele køres igen. 
+*Alle trin i koden er en komplet **log** over hvad du har gjort ved dataen for at få dit output*. 
+
+Når næste års data kommer, ændres blot `url = "https://...."` til den nye data og det hele køres igen. 
 
 ## Skalerbarhed
 
-*Den samme kode, der arbejder med 100 rækker, kan håndtere 1 million rækker uden problemer.*
+*Den samme kode, der arbejder med 100 rækker, kan håndtere millioner af rækker uden problemer.* (Flere rækker betyder dog logisk nok mere computerkraft og tid)
 
 ## Fleksibilitet
 
-*Python har tusindvis af specialiserede "værktøjskasser" (biblioteker) til alt fra grundlæggende statistik og datahåndtering til kunstig intelligens.*
+*Python har tusindvis af specialiserede "værktøjskasser" (biblioteker) til alt fra grundlæggende statistik og datahåndtering til machine learning og kunstig intelligens.*
 
 ## Automatisering 
 
-Skriv koden én gang, kør den hver dag/uge/måned/år automatisk.
+*Skriv koden én gang, kør den hver dag/uge/måned/år automatisk.*
 
 ## Kodning: *Kommunikation med maskinen* 
 
-<span class="timer" data-time="180"></span>
-
-Kodning skal være *utvetydigt og logisk struktureret*
+Kodning skal være *utvetydigt og logisk struktureret* for at maskine "forstår" os.
 
 I skal på kurset oparbejde en **algoritmisk tænkning**. 
 
+---
+
+<span class="timer" data-time="180"></span>
+
+
 ::: {.incremental}
 
-- **Dekomposition**: Bryde komplekse problemer ned i mindre, håndterbare dele
-- **Mønstergenkendelse**: Identificere ligheder på tværs af forskellige problemer
-- **Abstraktion**: Fokusere på de væsentlige aspekter og ignorere irrelevante detaljer
-- **Algoritmedesign**: Step-by-step løsninger der kan automatiseres
+**Spg.:** Hvad tænker I når i hører ordet *Algoritme*?
+
+- *Algoritmisk tænkning*:
+
+  - **Dekomposition**: Bryde komplekse problemer ned i mindre, håndterbare dele
+  - **Mønstergenkendelse**: Identificere ligheder på tværs af forskellige problemer
+  - **Abstraktion**: Fokusere på de væsentlige aspekter og ignorere irrelevante detaljer
+  - **Algoritmedesign**: Step-by-step løsninger der kan automatiseres
 
 :::
 
-## Hvorfor Python 🐍
+## Hvorfor Python? 🐍
 
 - (Relativt) simpelt. 
 
@@ -129,15 +139,17 @@ I skal på kurset oparbejde en **algoritmisk tænkning**.
 
 - Omfattende biblioteker til alle forskningsområder.
 
-## Python: Tanke til handling
+## Kodning af en tanke til handling i 4 niveauer
 
 ## *Niveau 1*: Menneskelig tanke
 
-"Jeg vil gerne finde gennemsnittet af mine salgstal"
+> "Jeg vil finde gennemsnittet af mine salgstal"
 
 ## *Niveau 2*: Algoritmisk tænkning
 
-"Læg alle tallene sammen, divider med antallet af tal"
+> "Læg alle tallene sammen, divider med antallet af tal"
+
+<br><br><br><br>
 
 $$
 \bar{x} = \frac{x_1 + x_2 + x_3 + \ldots + x_n}{n} = \frac{\sum_{i=1}^{n} x_i}{n}
@@ -167,13 +179,27 @@ print(f"Gennemsnit: {gennemsnit}")
 <div class="code-output" id="output2"></div>
 </div>
 
+::: {.incremental}
+
+Hvad har vi implementeret her: 
+
 1. $\text{total} = \sum_{i=1}^{n} \text{sales}_i$
 
-2. $\text{gennemsnit} = \frac{\text{total}}{n} = \frac{\sum_{i=1}^{n} \text{sales}_i}{n}$
+2. $\text{gennemsnit} = \frac{\text{total}}{n} = \frac{\sum_{i=1}^{n} \text{sales}_i}{n}$, Hvor $n$ er antallet af salgstal i datasættet.
 
-Hvor $n$ er antallet af salgstal i datasættet.
+3. Udskriv resultatet
+
+:::
 
 ## *Niveau 4*: Maskinsprog 
+
+Maskinen forstår ikke `Python` (?!)
+
+- Computeren forstår kun maskinkode. Hvilket er lavniveau instruktioner bestående af $1$-taller og $0$'er (binary), som **CPU**'en kan arbejde med.
+
+- Python fortolkeren oversætter altså koden til noget som maskinen kan forstå: og Python er **muligt** nemmere at læse for mennesker end maskinkode. 
+
+- Denne oversættelse forgår i en mellemform (assembly-sprog), der er **meget** mere besværligt at arbejde med end Python, a la: 
 
 ```
 LOAD data
@@ -182,7 +208,39 @@ DIVIDE by count
 STORE result
 ```
 
---- 
+Som I maskinkode kunne se således ud: 
+
+```
+10110000 01100001
+```
+
+---
+
+**Process:**
+
+Høj-niveau: 
+
+```
+total = sum(data)  
+gennemsnit = total / len(data)
+```
+
+Mellem-niveau: 
+
+```
+LOAD data
+ADD all values
+DIVIDE by count
+STORE result
+```
+
+Lav-niveau: 
+
+```
+10110000 01100001
+```
+
+## Præcision er nøglen! 
 
 > "Kan du hente en kop kaffen?" 
 
@@ -192,9 +250,9 @@ Oversat til eksplicitte instruktioner:
 
 ::: {.incremental}
 
-- `cup = get_cup_from_kitchen()`
-- `coffee = pour_coffee(cup)`
-- `return coffee_to_desk(cup)`
+1. `cup = get_cup_from_kitchen()`
+2. `coffee = pour_coffee(cup)`
+3. `return coffee_to_desk(cup)`
 
 :::
 
@@ -229,9 +287,17 @@ for tal in data['sales']:
 <div class="code-output" id="output1.1"></div>
 </div>
 
-## Variable og Pythons hukommelse 
+$$
+\begin{aligned}
+\textbf{for hvert } \text{tal} ~ i ~ \text{salgstal}: \\
+\quad \textbf{hvis } \text{tal} ~større~end~ 10000: \\
+\qquad \textbf{udskriv} ~ \text{tal} ~~
+\end{aligned}
+$$
 
-`data` har virket flere steder i vores kode, selvom vi kun har indlæst den én gang. 
+## Variable og Pythons *hukommelse* 
+
+**Bemærk**: `data` har virket flere steder i vores kode, selvom vi kun har indlæst den én gang. 
 
 <div class="code-container">
 <div class="code-input">
@@ -258,6 +324,8 @@ print(total)
 
 ---
 
+<br><br>
+
 ```
 pris = 100
 
@@ -268,15 +336,17 @@ total = pris + moms
 print(total)
 ```
 
-1. Tag værdien 100 og gem det i hukommelseslokation kaldet 'pris'
+<br>
+
+1. Tag værdien 100 og gem det i **hukommelseslokation** kaldet 'pris'
 
 2. Tag værdien fra 'pris', gang med 0.25, gem resultatet som 'moms'
 
-Maskinen er ligeglad med om navne giver mening. Vi bruger meningsfulde navne for at forstå vores egen kode. 
+Maskinen er ligeglad med om navne giver mening. Vi bruger **meningsfulde navne** for at forstå vores egen kode. 
 
 ## Funktioner: Genanvendelige "opskrifter"
 
-Defination af funktioner svarer til at lære maskinen en ny "kommando". Nu kan vi sige beregn_moms(100) og maskinen ved præcist, hvad den skal gøre, fordi vi har defineret hver eneste trin.
+**Defination af funktioner** svarer til at lære maskinen en ny "kommando". Nu kan vi sige `beregn_moms(tal)` og maskinen ved præcist, hvad den skal gøre, fordi vi har defineret hver eneste trin.
 
 <div class="code-container">
 <div class="code-input">
@@ -319,7 +389,7 @@ beregn_moms(355902, moms_sats=0.12)
 
 ## Den fundamentale erkendelse om maskiner 
 
-Maskiner er utroligt dumme men utroligt hurtige og pålidelige. De kan kun gøre simple ting som:
+Maskiner er utroligt dumme men **utroligt hurtige og pålidelige**. De kan kun gøre simple ting som:
 
 - Gemme tal
 - Sammenligne værdier
@@ -328,17 +398,19 @@ Maskiner er utroligt dumme men utroligt hurtige og pålidelige. De kan kun gøre
 
 Men de kan gøre disse simple ting milliarder af gange per sekund uden fejl.
 
-**Kodningens kunst** ligger i at bryde komplekse menneskelige problemer ned til disse simple operationer og derefter komponere dem sammen til kraftfulde løsninger.
+> **Kodningens kunst** ligger i at bryde komplekse menneskelige problemer ned til disse simple operationer og derefter komponere dem sammen til kraftfulde løsninger.
 
-## Computational Social Science (Digitale metoder til kriminalitetsforståelse)
+## *Computational Social Science* 
 
-Vi flytter fra små, lokale undersøgelser til analyser af massive datasæt der kan afsløre mønstre, vi aldrig kunne se før.
+Eks.: *Digitale metoder til kriminalitetsforståelse*
+
+Vi flytter fra **små, lokale undersøgelser** til analyser af **massive datasæt** der kan afsløre mønstre, vi aldrig kunne se før.
 
 ::: {style="font-size: 0.7em;"}
 
 - **Traditionel tilgang**: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå recidiv-mønstre.
 
-- **Computational tilgang**: Analyser alle $n$ millioner straffesager fra de sidste 20 år og identificer præcise risikofaktorer for tilbagefald.
+- **Computational tilgang**: Analyser alle $n$ millioner straffesager fra de sidste 20 år og identificer risikofaktorer for tilbagefald.
 
 :::
 
@@ -346,8 +418,8 @@ Vi flytter fra små, lokale undersøgelser til analyser af massive datasæt der 
 <div class="code-input">
 <textarea class="python-editor" id="code6">
 
-# Find recidiv-mønstre i nationale registre
-url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/straffesager_1990_2024.csv"
+# Find tilbagefalds-mønstre i nationale registre
+url = "https://tinyurl.com/3ja8pcfv"
 
 recidiv_data = pd.read_csv(url)
 
@@ -368,7 +440,7 @@ print(risiko_faktorer)
 <div class="code-output" id="output6"></div>
 </div>
 
-## Spatial kriminologi: Når kriminalitet [data] får koordinater
+## *Spatial* kriminologi: Når kriminalitet [data] får koordinater
 
 <div class="code-container">
 <div class="code-input">
@@ -379,7 +451,7 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import DBSCAN
 from io import StringIO
 
-url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/copenhagen_crime_2024.csv"
+url = "https://tinyurl.com/4r8tj95v"
 crime_data = pd.read_csv(url)  
 
 coords = crime_data[['latitude', 'longitude']]
@@ -389,8 +461,12 @@ clusters = DBSCAN(eps=0.005, min_samples=2).fit(coords)
 fig, ax = plt.subplots(figsize=(12, 8))
 
 scatter = ax.scatter(crime_data['longitude'], crime_data['latitude'], 
-                    c=clusters.labels_, cmap='viridis', 
-                    alpha=0.7, s=60, edgecolors='black', linewidth=0.5)
+                    c=clusters.labels_, 
+                    cmap='viridis', 
+                    alpha=0.7, 
+                    s=60, 
+                    edgecolors='black', 
+                    linewidth=0.5)
 
 ax.set_xlabel('Longitude')
 ax.set_ylabel('Latitude')
@@ -415,42 +491,7 @@ plt.show()
 <div class="code-output" id="output7"></div>
 </div>
 
-## Netværksanalyse: Kriminelle organisationer [data] som grafer
-
-<div class="code-container">
-<div class="code-input">
-<textarea class="python-editor" id="code8">
-
-import networkx as nx
-
-# Byg netværk af kriminelle forbindelser
-G = nx.Graph()
-for _, row in arrest_data.iterrows():
-    G.add_edge(row['person1'], row['person2'], 
-               weight=row['co_arrests'])
-
-# Find centrale figurer i netværket
-centrality = nx.betweenness_centrality(G)
-key_players = sorted(centrality.items(), 
-                    key=lambda x: x[1], reverse=True)[:10]
-
-# Simuler effekt af at arrestere nøglepersoner
-original_components = nx.number_connected_components(G)
-G.remove_nodes_from([player[0] for player in key_players[:3]])
-new_components = nx.number_connected_components(G)
-
-</textarea>
-<button class="run-button" onclick="runPython(document.getElementById('code8').value, 'output8')">
-  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
-</button>
-<button class="reset-button" onclick="resetPythonGlobals()">
-  <img src="resources/dust.png" alt="Python" style="height: 50px;">
-</button>
-</div>
-<div class="code-output" id="output8"></div>
-</div>
-
-## Predictive Policing: Algoritmer der forudsiger [data] kriminalitet
+## *Predictive* Policing: Algoritmer der forudsiger [data] kriminalitet
 
 <div class="code-container">
 <div class="code-input">
@@ -481,69 +522,34 @@ high_risk_areas = tomorrow_data[tomorrow_risk[:, 1] > 0.7]
 <div class="code-output" id="output9"></div>
 </div>
 
-## Text Mining: Analysere millioner af [text] politirapporter
+# De store spørgsmål koden ikke selv kan svare på: *Etik og bias*
 
-<div class="code-container">
-<div class="code-input">
-<textarea class="python-editor" id="code10">
+# Arbejde i UCloud 
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans
+## Cloud computing and HPC 
 
-# Indlæs 500,000 politirapporter
-reports = pd.read_csv("police_reports_2020_2024.csv")
+- **HPC**: At bruge mange kraftige computere, som er koblet sammen i store klynger (clusters), til at løse komplekse og krævende opgaver.
 
-# Identificer mønstre i rapporttekster
-vectorizer = TfidfVectorizer(max_features=1000, stop_words='danish')
-text_vectors = vectorizer.fit_transform(reports['report_text'])
+- **Cloud computing**: Adgang til computerressourcer (fx programmer, lagerplads og regnekraft) via internettet, fremfor at have det hele installeret på sin egen computer.
 
-# Cluster lignende kriminalitetstyper
-kmeans = KMeans(n_clusters=15)
-clusters = kmeans.fit_predict(text_vectors)
+- **UCloud**: En dansk platform udviklet af Syddansk Universitet (SDU) og Aalborg Universitet (AAU). Den gør det muligt for forskere, undervisere og studerende at udnytte HPC-ressourcer på en enkel måde.
 
-# Find mest karakteristiske ord for hver cluster
-feature_names = vectorizer.get_feature_names_out()
-for i in range(15):
-    cluster_center = kmeans.cluster_centers_[i]
-    top_words = [feature_names[j] for j in cluster_center.argsort()[-10:]]
-    print(f"Cluster {i}: {', '.join(top_words)}")
+  - **Køre programmer uden installation**: UCloud tilbyder et bibliotek af applikationer (fx RStudio, Jupyter Notebooks, MATLAB, Stata, Python, osv.), som kan startes direkte i browseren.
 
-</textarea>
-<button class="run-button" onclick="runPython(document.getElementById('code10').value, 'output10')">
-  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
-</button>
-<button class="reset-button" onclick="resetPythonGlobals()">
-  <img src="resources/dust.png" alt="Python" style="height: 50px;">
-</button>
-</div>
-<div class="code-output" id="output10"></div>
-</div>
+  - **Brug HPC-ressourcer:** Når du starter en applikation, vælger du selv hvor meget regnekraft (CPU, GPU, RAM) du har brug for. Du arbejder stadig i en browser, men beregningen sker på en HPC-klynge.
 
-## De store spørgsmål: Etik og bias
+  - **Datahåndtering**: Du kan uploade, downloade og organisere dine data direkte i UCloud. Der er også muligheder for sikker deling af data med kolleger.
 
+  - **Samarbejde**: Projekter i UCloud kan deles med andre brugere, så man kan arbejde på de samme data og applikationer.
 
+## UCLoud i praksis
 
+1. Log ind med WAYF (din universitetslogin).
 
+2. Vælg et projekt: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.
 
+3. Start en applikation: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.
 
-## 1
+4. Arbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.
 
-<div class="code-container">
-<div class="code-input">
-<textarea class="python-editor" id="code11">
-
-
-</textarea>
-<button class="run-button" onclick="runPython(document.getElementById('code11').value, 'output11')">
-  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
-</button>
-<button class="reset-button" onclick="resetPythonGlobals()">
-  <img src="resources/dust.png" alt="Python" style="height: 50px;">
-</button>
-</div>
-<div class="code-output" id="output11"></div>
-</div>
-
-
-
-
+5. Gem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer.
