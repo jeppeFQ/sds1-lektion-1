@@ -334,9 +334,13 @@ Men de kan gøre disse simple ting milliarder af gange per sekund uden fejl.
 
 Vi flytter fra små, lokale undersøgelser til analyser af massive datasæt der kan afsløre mønstre, vi aldrig kunne se før.
 
+::: {style="font-size: 0.7em;"}
+
 - **Traditionel tilgang**: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå recidiv-mønstre.
 
 - **Computational tilgang**: Analyser alle $n$ millioner straffesager fra de sidste 20 år og identificer præcise risikofaktorer for tilbagefald.
+
+:::
 
 <div class="code-container">
 <div class="code-input">
@@ -345,11 +349,13 @@ Vi flytter fra små, lokale undersøgelser til analyser af massive datasæt der 
 # Find recidiv-mønstre i nationale registre
 url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/straffesager_1990_2024.csv"
 
-recidiv_data = pd.read_csv(StringIO(csv_data))
-risiko_faktorer = recidiv_data.groupby(['alder', 'krimtype', 'tidligere_domme']).agg({
-    'tilbagefald': 'mean',
+recidiv_data = pd.read_csv(url)
+
+risiko_faktorer = recidiv_data.groupby(['krimtype', 'tidligere_domme']).agg({
     'dage_til_tilbagefald': 'median'
 })
+
+print(risiko_faktorer)
 
 </textarea>
 <button class="run-button" onclick="runPython(document.getElementById('code6').value, 'output6')">
@@ -368,20 +374,35 @@ risiko_faktorer = recidiv_data.groupby(['alder', 'krimtype', 'tidligere_domme'])
 <div class="code-input">
 <textarea class="python-editor" id="code7">
 
-import geopandas as gpd
+import pandas as pd
 import matplotlib.pyplot as plt
-
-# Indlæs kriminalitetsdata med GPS-koordinater
-crime_data = pd.read_csv("copenhagen_crime_2024.csv")
-
-# Identificer hot spots ved clustering
 from sklearn.cluster import DBSCAN
+from io import StringIO
+
+url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/copenhagen_crime_2024.csv"
+crime_data = pd.read_csv(url)  
+
 coords = crime_data[['latitude', 'longitude']]
-clusters = DBSCAN(eps=0.01, min_samples=10).fit(coords)
+clusters = DBSCAN(eps=0.005, min_samples=2).fit(coords)
 
 # Visualiser på kort
 fig, ax = plt.subplots(figsize=(12, 8))
-crime_data.plot(ax=ax, c=clusters.labels_, cmap='viridis')
+
+scatter = ax.scatter(crime_data['longitude'], crime_data['latitude'], 
+                    c=clusters.labels_, cmap='viridis', 
+                    alpha=0.7, s=60, edgecolors='black', linewidth=0.5)
+
+ax.set_xlabel('Longitude')
+ax.set_ylabel('Latitude')
+ax.set_title('København Kriminalitets Hot Spots\n(Farver viser clusters)')
+ax.grid(True, alpha=0.3)
+
+# Tilføj colorbar
+cbar = plt.colorbar(scatter)
+cbar.set_label('Cluster ID (-1 = støj/outliers)')
+
+plt.tight_layout()
+plt.show()
 
 </textarea>
 <button class="run-button" onclick="runPython(document.getElementById('code7').value, 'output7')">

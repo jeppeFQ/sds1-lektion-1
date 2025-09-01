@@ -68,7 +68,6 @@ async function initPyodide() {
   }
 }
 
-// Kombineret runPython funktion med fleksibel URL-håndtering
 async function runPython(code, outputId) {
   try {
     if (!pyodideReady) {
@@ -78,75 +77,151 @@ async function runPython(code, outputId) {
 
     const outputElement = document.getElementById(outputId);
     
-    // Install packages only once
+    // Install base packages only once
     if (!packagesInstalled) {
-      outputElement.innerHTML = "Installerer pakker...";
-      
-      // Install required packages silently
+      outputElement.innerHTML = "Installerer grundpakker...";
       await pyodide.runPythonAsync(`
         import micropip
         await micropip.install(["pandas", "numpy", "matplotlib"])
       `);
-      
       packagesInstalled = true;
     }
     
-    // Clear output and setup environment
+    // Detect additional packages needed in the code
+    const packageMap = {
+      'sklearn': 'scikit-learn',
+      'geopandas': 'geopandas', 
+      'networkx': 'networkx',
+      'seaborn': 'seaborn'
+    };
+    
+    const neededPackages = [];
+    for (const [importName, packageName] of Object.entries(packageMap)) {
+      if (code.includes(`import ${importName}`) || code.includes(`from ${importName}`)) {
+        neededPackages.push(packageName);
+      }
+    }
+    
+    // Install additional packages if needed
+    if (neededPackages.length > 0) {
+      outputElement.innerHTML = `Installerer ${neededPackages.join(', ')}...`;
+      for (const pkg of neededPackages) {
+        try {
+          await pyodide.runPythonAsync(`
+            import micropip
+            await micropip.install("${pkg}")
+          `);
+          console.log(`Installed ${pkg}`);
+        } catch (error) {
+          console.warn(`Could not install ${pkg}:`, error);
+        }
+      }
+    }
+    
     outputElement.textContent = '';
     
-    // Setup the environment with flexible URL handling
-    await pyodide.runPythonAsync(`
+    // Setup environment once
+    if (!pyodide.globals.get('env_setup')) {
+      await pyodide.runPythonAsync(`
 import sys
 from io import StringIO
 from pyodide.http import pyfetch
 import pandas as pd
-import re
 
-# Function to fetch CSV data from any URL
-async def fetch_csv_data(url):
-    try:
-        response = await pyfetch(url)
-        return await response.string()
-    except Exception as e:
-        print(f"Fejl ved hentning af {url}: {e}")
-        return None
+# Setup matplotlib for web display
+import matplotlib
+matplotlib.use('AGG')  # Use Anti-Grain Geometry backend
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
-# Function to auto-fetch URLs found in code
-async def auto_fetch_urls(code_text):
-    # Find all URLs in the code
-    url_pattern = r'url\s*=\s*["\']([^"\']+)["\']'
-    urls = re.findall(url_pattern, code_text)
+# Function to display plots in HTML
+def show_plot():
+    buf = BytesIO()
+    plt.savefig(buf, format='png', bbox_inches='tight', dpi=100)
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read()).decode()
+    plt.close()  # Close the plot to free memory
     
-    # Fetch data for each URL and make available as csv_data
-    if urls:
-        main_url = urls[0]  # Use the first URL found
-        csv_data = await fetch_csv_data(main_url)
-        return csv_data
-    return None
+    # Create HTML img tag
+    html_img = f'<img src="data:image/png;base64,{img_base64}" style="max-width:100%; height:auto;">'
+    print("PLOT_HTML:" + html_img)  # Special marker for JS to detect
+    return html_img
 
-# Auto-detect and fetch URLs in user code
-user_code_text = """${code.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"""
-csv_data = await auto_fetch_urls(user_code_text)
-    `);
+# Override plt.show() to use our custom function
+original_show = plt.show
+plt.show = lambda: show_plot()
+
+env_setup = True
+      `);
+    }
     
-    // Capture stdout for user code
+    // Pre-process the code to handle URLs
+    let processedCode = code;
+    
+    // Find URLs in the code
+    const urlPattern = /url\s*=\s*["']([^"']+)["']/g;
+    const urls = [];
+    let match;
+    
+    while ((match = urlPattern.exec(code)) !== null) {
+      urls.push(match[1]);
+    }
+    
+    // If we found URLs, fetch them and modify the code
+    if (urls.length > 0) {
+      // Fetch the data first
+      await pyodide.runPythonAsync(`
+# Fetch data from URL
+response = await pyfetch("${urls[0]}")
+csv_data = await response.string()
+      `);
+      
+      // Replace pd.read_csv(url) with pd.read_csv(StringIO(csv_data))
+      processedCode = processedCode.replace(
+        /pd\.read_csv\(url\)/g, 
+        'pd.read_csv(StringIO(csv_data))'
+      );
+      
+      // Also replace direct URL usage in pd.read_csv
+      processedCode = processedCode.replace(
+        /pd\.read_csv\(["']([^"']+)["']\)/g,
+        'pd.read_csv(StringIO(csv_data))'
+      );
+    }
+    
+    // Capture stdout
     pyodide.runPython(`
 import sys
 from io import StringIO
 sys.stdout = StringIO()
     `);
     
-    // Run user code
-    pyodide.runPython(code);
+    // Run the processed code
+    pyodide.runPython(processedCode);
     
-    // Get output and restore stdout  
+    // Get output and handle plots
     const result = pyodide.runPython(`
 output = sys.stdout.getvalue()
 sys.stdout = sys.__stdout__
 output
     `);
     
-    outputElement.textContent = result || 'Kode kørt succesfuldt!';
+    // Check if output contains plot HTML
+    if (result && result.includes('PLOT_HTML:')) {
+      const parts = result.split('PLOT_HTML:');
+      const textOutput = parts[0].trim();
+      const plotHtml = parts[1];
+      
+      // Display text output if any
+      if (textOutput) {
+        outputElement.innerHTML = `<pre>${textOutput}</pre>${plotHtml}`;
+      } else {
+        outputElement.innerHTML = plotHtml;
+      }
+    } else {
+      outputElement.textContent = result || 'Kode kørt succesfuldt!';
+    }
     
   } catch (error) {
     document.getElementById(outputId).innerHTML = `<span style="color: red;">Fejl: ${error.message}</span>`;
@@ -154,104 +229,18 @@ output
   }
 }
 
-// Advanced version for multiple URLs in one code block
-async function runPythonAdvanced(code, outputId) {
-  try {
-    if (!pyodideReady) {
-      await initPyodide();
-    }
-
-    const outputElement = document.getElementById(outputId);
-    
-    // Install packages if needed
-    if (!packagesInstalled) {
-      outputElement.innerHTML = "Installerer pakker...";
-      await pyodide.runPythonAsync(`
-        import micropip
-        await micropip.install(["pandas", "numpy", "matplotlib"])
-      `);
-      packagesInstalled = true;
-    }
-    
-    // Setup environment with support for multiple datasets
-    await pyodide.runPythonAsync(`
-import sys, re
-from io import StringIO
-from pyodide.http import pyfetch
-import pandas as pd
-
-# Dictionary to store multiple datasets
-datasets = {}
-
-async def fetch_and_store_data(var_name, url):
-    """Fetch data from URL and store in datasets dictionary"""
-    try:
-        response = await pyfetch(url)
-        csv_content = await response.string()
-        datasets[var_name] = pd.read_csv(StringIO(csv_content))
-        return True
-    except Exception as e:
-        print(f"Fejl ved hentning af {url}: {e}")
-        return False
-
-# Parse user code for URL assignments
-user_code = """${code.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"""
-
-# Find patterns like: variable_name = pd.read_csv("url")
-pattern = r'(\\w+)\\s*=\\s*pd\\.read_csv\\(["\']([^"\']+)["\']\\)'
-matches = re.findall(pattern, user_code)
-
-for var_name, url in matches:
-    success = await fetch_and_store_data(var_name, url)
-    if success:
-        # Make dataset available as the variable name
-        globals()[var_name] = datasets[var_name]
-        print(f"✓ Indlæst {var_name} fra {url}")
-
-# Also handle direct URL assignments
-url_pattern = r'url\\s*=\\s*["\']([^"\']+)["\']'
-urls = re.findall(url_pattern, user_code)
-if urls:
-    response = await pyfetch(urls[0])
-    csv_data = await response.string()
-    print(f"✓ Hentet data fra {urls[0]}")
-    `);
-    
-    // Capture output and run user code
-    pyodide.runPython(`
-sys.stdout = StringIO()
-    `);
-    
-    pyodide.runPython(code);
-    
-    const result = pyodide.runPython(`
-output = sys.stdout.getvalue()
-sys.stdout = sys.__stdout__
-output
-    `);
-    
-    outputElement.textContent = result || 'Kode kørt succesfuldt!';
-    
-  } catch (error) {
-    document.getElementById(outputId).innerHTML = `<span style="color: red;">Fejl: ${error.message}</span>`;
-  }
-}
-
 function resetPythonGlobals() {
   if (!pyodideReady) return;
   
   try {
-    packagesInstalled = false;
-    
     pyodide.runPython(`
-# Clear variables but keep built-ins and datasets
+# Clear variables but keep built-ins
 for name in list(globals().keys()):
-    if not name.startswith('__') and name not in ['micropip', 'pandas', 'pd', 'pyfetch', 'StringIO', 'datasets', 'fetch_and_store_data']:
+    if not name.startswith('__') and name not in [
+        'micropip', 'pandas', 'pd', 'pyfetch', 'StringIO', 
+        'env_setup', 'plt', 'matplotlib', 'numpy', 'np'
+    ]:
         del globals()[name]
-        
-# Clear datasets dictionary
-if 'datasets' in globals():
-    datasets.clear()
     `);
     
     updateStatus('ready', 'Python-miljø nulstillet');
