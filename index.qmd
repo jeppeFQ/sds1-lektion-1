@@ -343,7 +343,9 @@ Vi flytter fra små, lokale undersøgelser til analyser af massive datasæt der 
 <textarea class="python-editor" id="code6">
 
 # Find recidiv-mønstre i nationale registre
-recidiv_data = pd.read_csv("straffesager_1990_2024.csv")
+url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/straffesager_1990_2024.csv"
+
+recidiv_data = pd.read_csv(url)
 risiko_faktorer = recidiv_data.groupby(['alder', 'krimtype', 'tidligere_domme']).agg({
     'tilbagefald': 'mean',
     'dage_til_tilbagefald': 'median'
