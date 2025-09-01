@@ -1,5 +1,6 @@
 let pyodide;
 let pyodideReady = false;
+let packagesInstalled = false; // Flyt denne til toppen
 
 function updateStatus(type, message) {
   let statusDiv = document.getElementById('pyodide-status');
@@ -38,6 +39,11 @@ async function initPyodide() {
     
     console.log('Pyodide indlæst korrekt');
     
+    // Load micropip immediately after Pyodide is ready
+    console.log('Indlæser micropip...');
+    await pyodide.loadPackage("micropip");
+    console.log('micropip indlæst');
+    
     // Test basic functionality
     const testResult = pyodide.runPython('2 + 2');
     console.log('Testresultat:', testResult);
@@ -62,6 +68,7 @@ async function initPyodide() {
   }
 }
 
+// Kombineret runPython funktion
 async function runPython(code, outputId) {
   try {
     if (!pyodideReady) {
@@ -69,36 +76,80 @@ async function runPython(code, outputId) {
       await initPyodide();
     }
 
-    // Clear output before running new code
-    document.getElementById(outputId).textContent = '';
+    const outputElement = document.getElementById(outputId);
     
+    // Install packages only once
+    if (!packagesInstalled) {
+      outputElement.innerHTML = "Installerer pakker...";
+      
+      // Install required packages silently
+      await pyodide.runPythonAsync(`
+        import micropip
+        await micropip.install("pandas")
+      `);
+      
+      packagesInstalled = true;
+    }
+    
+    // Clear output and setup stdout capture
+    outputElement.textContent = '';
+    
+    // Setup the environment first
+    await pyodide.runPythonAsync(`
+import sys
+from io import StringIO
+from pyodide.http import pyfetch
+import pandas as pd
+
+# Hidden URL fetching code
+async def fetch_csv_data(url):
+    response = await pyfetch(url)
+    return await response.string()
+
+# Provide default URL and csv_data
+url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/sales_data.csv"
+csv_data = await fetch_csv_data(url)
+    `);
+    
+    // Capture stdout for user code
     pyodide.runPython(`
 import sys
 from io import StringIO
 sys.stdout = StringIO()
     `);
     
+    // Run user code
     pyodide.runPython(code);
     
-    const stdout = pyodide.runPython("sys.stdout.getvalue()");
-    pyodide.runPython("sys.stdout = sys.__stdout__");
+    // Get output and restore stdout  
+    const result = pyodide.runPython(`
+output = sys.stdout.getvalue()
+sys.stdout = sys.__stdout__
+output
+    `);
     
-    document.getElementById(outputId).textContent = stdout || '(Intet output)';
+    // Run the combined code
+    outputElement.textContent = result || 'Kode kørt succesfuldt!';
     
   } catch (error) {
-    document.getElementById(outputId).textContent = `Fejl: ${error.message}`;
+    document.getElementById(outputId).innerHTML = `<span style="color: red;">Fejl: ${error.message}</span>`;
     console.error('Fejl under Python-udførelse:', error);
   }
 }
 
 function resetPythonGlobals() {
   if (!pyodideReady) return;
+  
   try {
+    packagesInstalled = false; // Reset package installation flag
+    
     pyodide.runPython(`
-globals().clear()
-import builtins
-globals().update({k: getattr(builtins, k) for k in dir(builtins)})
-`);
+# Clear variables but keep built-ins
+for name in list(globals().keys()):
+    if not name.startswith('__') and name not in ['micropip', 'pandas', 'pd', 'pyfetch', 'StringIO']:
+        del globals()[name]
+    `);
+    
     updateStatus('ready', 'Python-miljø nulstillet');
     console.log('Python global environment reset');
   } catch (error) {

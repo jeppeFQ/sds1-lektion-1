@@ -11,13 +11,118 @@
     "href": "index.html#kodning-vs.-excel",
     "title": "Første møde med Python og UCloud",
     "section": "“Kodning” vs. Excel",
-    "text": "“Kodning” vs. Excel\nReproducerbar, skalerbar og fleksibel!\nNår Excel kommer til kort:\n\nAnalysere 100.000-vis af rækker data\nGentage den samme analyse hver [dag/måned/år] med nye data\nDokumentere præcist, hvad du har gjort, så en kollega kan gentage det\nKombinere data fra [mange] forskellige kilder\nLave avancerede statistiske modeller"
+    "text": "“Kodning” vs. Excel\nReproducerbar, skalerbar, fleksibel og automatisering!\nNår Excel kommer til kort:\n\nAnalysere 100.000-vis af rækker data\nGentage den samme analyse hver [dag/måned/år] med nye data\n\nI Excel [eller lign.], hvis data ændrer sig, skal du gentage alle klik.\n\nDokumentere præcist, hvad du har gjort, så en kollega kan gentage det\nKombinere data fra [mange] forskellige kilder\nLave avancerede statistiske modeller"
   },
   {
     "objectID": "index.html#python-et-kodesprog",
     "href": "index.html#python-et-kodesprog",
     "title": "Første møde med Python og UCloud",
     "section": "Python; et kodesprog",
-    "text": "Python; et kodesprog\nTænk på det som et meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\n# Læs data fra fil (uden specialicerede biblioteker)\nwith open(\"resources/sales_data.csv\", \"r\", encoding=\"utf-8\") as file:\n    lines = file.readlines()\n\n# Parse CSV data manuelt\nheader = lines[0].strip().split(\",\")\ndata = []\nfor line in lines[1:]:\n    row = line.strip().split(\",\")\n    data.append(row)"
+    "text": "Python; et kodesprog\n\nTænk på kodning som et meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\nimport pandas as pd\n\n# Hent data fra URL\nfrom io import StringIO\nurl = \"https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/sales_data.csv\"\n\ndata = pd.read_csv(StringIO(csv_data))\n\n# Beregn gennemsnit for hver måned\nmonthly_average = data.groupby('month')['sales'].mean()\nprint(\"\\nMånedlige gennemsnit:\")\nprint(monthly_average)"
+  },
+  {
+    "objectID": "index.html#reproducerbar",
+    "href": "index.html#reproducerbar",
+    "title": "Første møde med Python og UCloud",
+    "section": "Reproducerbar",
+    "text": "Reproducerbar\n\nHvordan fik du resultatet?\n\nmonthly_average = data.groupby('month')['sales'].mean()\nAlle trin i koden er en komplet log over hvad du har gjort ved dataen for at få dit output. Når næste års data kommer, ændres blot url = \"https://....\" til den nye data og det hele køres igen."
+  },
+  {
+    "objectID": "index.html#skalerbarhed",
+    "href": "index.html#skalerbarhed",
+    "title": "Første møde med Python og UCloud",
+    "section": "Skalerbarhed",
+    "text": "Skalerbarhed\nDen samme kode, der arbejder med 100 rækker, kan håndtere 1 million rækker uden problemer."
+  },
+  {
+    "objectID": "index.html#fleksibilitet",
+    "href": "index.html#fleksibilitet",
+    "title": "Første møde med Python og UCloud",
+    "section": "Fleksibilitet",
+    "text": "Fleksibilitet\nPython har tusindvis af specialiserede “værktøjskasser” (biblioteker) til alt fra grundlæggende statistik og datahåndtering til kunstig intelligens."
+  },
+  {
+    "objectID": "index.html#automatisering",
+    "href": "index.html#automatisering",
+    "title": "Første møde med Python og UCloud",
+    "section": "Automatisering",
+    "text": "Automatisering\nSkriv koden én gang, kør den hver dag/uge/måned/år automatisk."
+  },
+  {
+    "objectID": "index.html#kodning-kommunikation-med-maskinen",
+    "href": "index.html#kodning-kommunikation-med-maskinen",
+    "title": "Første møde med Python og UCloud",
+    "section": "Kodning: Kommunikation med maskinen",
+    "text": "Kodning: Kommunikation med maskinen\n\nKodning skal være utvetydigt og logisk struktureret\nI skal på kurset oparbejde en algoritmisk tænkning.\n\nDekomposition: Bryde komplekse problemer ned i mindre, håndterbare dele\nMønstergenkendelse: Identificere ligheder på tværs af forskellige problemer\nAbstraktion: Fokusere på de væsentlige aspekter og ignorere irrelevante detaljer\nAlgoritmedesign: Step-by-step løsninger der kan automatiseres"
+  },
+  {
+    "objectID": "index.html#hvorfor-python",
+    "href": "index.html#hvorfor-python",
+    "title": "Første møde med Python og UCloud",
+    "section": "Hvorfor Python 🐍",
+    "text": "Hvorfor Python 🐍\n\n(Relativt) simpelt.\nStor brugerbase.\nOmfattende biblioteker til alle forskningsområder."
+  },
+  {
+    "objectID": "index.html#python-tanke-til-handling",
+    "href": "index.html#python-tanke-til-handling",
+    "title": "Første møde med Python og UCloud",
+    "section": "Python: Tanke til handling",
+    "text": "Python: Tanke til handling"
+  },
+  {
+    "objectID": "index.html#niveau-1-menneskelig-tanke",
+    "href": "index.html#niveau-1-menneskelig-tanke",
+    "title": "Første møde med Python og UCloud",
+    "section": "Niveau 1: Menneskelig tanke",
+    "text": "Niveau 1: Menneskelig tanke\n“Jeg vil gerne finde gennemsnittet af mine salgstal”"
+  },
+  {
+    "objectID": "index.html#niveau-2-algoritmisk-tænkning",
+    "href": "index.html#niveau-2-algoritmisk-tænkning",
+    "title": "Første møde med Python og UCloud",
+    "section": "Niveau 2: Algoritmisk tænkning",
+    "text": "Niveau 2: Algoritmisk tænkning\n“Læg alle tallene sammen, divider med antallet af tal”\n\\[\n\\bar{x} = \\frac{x_1 + x_2 + x_3 + \\ldots + x_n}{n} = \\frac{\\sum_{i=1}^{n} x_i}{n}\n\\]"
+  },
+  {
+    "objectID": "index.html#niveau-3-python-kode",
+    "href": "index.html#niveau-3-python-kode",
+    "title": "Første møde med Python og UCloud",
+    "section": "Niveau 3: Python-kode",
+    "text": "Niveau 3: Python-kode\n\n\ntotal = sum(data['sales'])  \n\ngennemsnit = total / len(data['sales'])\n\nprint(f\"Total salg: {total}\")\nprint(f\"Gennemsnit: {gennemsnit}\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\text{total} = \\sum_{i=1}^{n} \\text{sales}_i\\)\n\\(\\text{gennemsnit} = \\frac{\\text{total}}{n} = \\frac{\\sum_{i=1}^{n} \\text{sales}_i}{n}\\)\n\nHvor \\(n\\) er antallet af salgstal i datasættet."
+  },
+  {
+    "objectID": "index.html#niveau-4-maskinsprog",
+    "href": "index.html#niveau-4-maskinsprog",
+    "title": "Første møde med Python og UCloud",
+    "section": "Niveau 4: Maskinsprog",
+    "text": "Niveau 4: Maskinsprog\nLOAD data\nADD all values\nDIVIDE by count\nSTORE result"
+  },
+  {
+    "objectID": "index.html#præcise-instrukser",
+    "href": "index.html#præcise-instrukser",
+    "title": "Første møde med Python og UCloud",
+    "section": "Præcise instrukser",
+    "text": "Præcise instrukser\n\nHvilke salg er større end 10.000 (DKK)?\n\n\nTag første tal fra listen\nEr det større end 10000? Hvis ja, print det\nTag næste tal\nGentag indtil listen er tom"
+  },
+  {
+    "objectID": "index.html#variable-og-pythons-hukommelse",
+    "href": "index.html#variable-og-pythons-hukommelse",
+    "title": "Første møde med Python og UCloud",
+    "section": "Variable og Pythons hukommelse",
+    "text": "Variable og Pythons hukommelse\n\ndata virkede i kodeblok nr. 2, uden at vi indlæste den igen.\n\n\ngennemsnit = total / len(data['sales'])\n\n\n\npris = 100\n\nmoms = pris * 0.25\n\ntotal = pris + moms\n\nprint(total)"
+  },
+  {
+    "objectID": "index.html#funktioner-genanvendelige-opskrifter",
+    "href": "index.html#funktioner-genanvendelige-opskrifter",
+    "title": "Første møde med Python og UCloud",
+    "section": "Funktioner: Genanvendelige “opskrifter”",
+    "text": "Funktioner: Genanvendelige “opskrifter”\nDette svarer til at lære maskinen en ny “kommando” [funktion]. Nu kan vi sige beregn_moms(100) og maskinen ved præcist, hvad den skal gøre, fordi vi har defineret hver eneste trin.\n\n\ndef beregn_moms(pris, moms_sats=0.25):\n    return pris * moms_sats"
+  },
+  {
+    "objectID": "index.html#den-fundamentale-erkendelse-om-maskiner",
+    "href": "index.html#den-fundamentale-erkendelse-om-maskiner",
+    "title": "Første møde med Python og UCloud",
+    "section": "Den fundamentale erkendelse om maskiner",
+    "text": "Den fundamentale erkendelse om maskiner\nMaskiner er utroligt dumme men utroligt hurtige og pålidelige. De kan kun gøre simple ting som:\n\nGemme tal\nSammenligne værdier\nHoppe til forskellige dele af koden\nGentage instruktioner\n\nMen de kan gøre disse simple ting milliarder af gange per sekund uden fejl.\nKodningens kunst ligger i at bryde komplekse menneskelige problemer ned til disse simple operationer og derefter komponere dem sammen til kraftfulde løsninger."
   }
 ]
