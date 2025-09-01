@@ -58,10 +58,11 @@ Tænk på kodning som et *meget detaljeret* opskrift. Så fremfor en abstract "b
 <div class="code-input">
 <textarea class="python-editor" id="code1">
 
+# Hent biblioteker
 import pandas as pd
+from io import StringIO
 
 # Hent data fra URL
-from io import StringIO
 url = "https://tinyurl.com/3p843y7k"
 
 data = pd.read_csv(StringIO(csv_data))
@@ -91,13 +92,19 @@ print(monthly_average)
 
 `monthly_average = data.groupby('month')['sales'].mean()`
 
+<br><br>
+
 *Alle trin i koden er en komplet **log** over hvad du har gjort ved dataen for at få dit output*. 
 
 Når næste års data kommer, ændres blot `url = "https://...."` til den nye data og det hele køres igen. 
 
 ## Skalerbarhed
 
-*Den samme kode, der arbejder med 100 rækker, kan håndtere millioner af rækker uden problemer.* (Flere rækker betyder dog logisk nok mere computerkraft og tid)
+*Den samme kode, der arbejder med 100 rækker, kan håndtere millioner af rækker uden problemer.* 
+
+<br><br>
+
+Flere rækker kræver dog logisk nok mere computerkraft og tid. 
 
 ## Fleksibilitet
 
@@ -105,11 +112,11 @@ Når næste års data kommer, ændres blot `url = "https://...."` til den nye da
 
 ## Automatisering 
 
-*Skriv koden én gang, kør den hver dag/uge/måned/år automatisk.*
+*Skriv koden én gang:* kør den hver dag/uge/måned/år automatisk.
 
 ## Kodning: *Kommunikation med maskinen* 
 
-Kodning skal være *utvetydigt og logisk struktureret* for at maskine "forstår" os.
+Kodning skal være *utvetydigt og logisk struktureret* for at maskinen "forstår" os.
 
 I skal på kurset oparbejde en **algoritmisk tænkning**. 
 
@@ -120,7 +127,7 @@ I skal på kurset oparbejde en **algoritmisk tænkning**.
 
 ::: {.incremental}
 
-**Spg.:** Hvad tænker I når i hører ordet *Algoritme*?
+**Spg.:** Hvad tænker I når i hører ordet *'Algoritme'*?
 
 - *Algoritmisk tænkning*:
 
@@ -195,24 +202,11 @@ Hvad har vi implementeret her:
 
 Maskinen forstår ikke `Python` (?!)
 
-- Computeren forstår kun maskinkode. Hvilket er lavniveau instruktioner bestående af $1$-taller og $0$'er (binary), som **CPU**'en kan arbejde med.
+- Computeren forstår kun maskinkode. Dette er lav-niveau instruktioner bestående af $1$-taller og $0$'er (binary), som **CPU**'en kan arbejde med.
 
-- Python fortolkeren oversætter altså koden til noget som maskinen kan forstå: og Python er **muligt** nemmere at læse for mennesker end maskinkode. 
+- **Python-fortolkeren** oversætter altså koden til noget som maskinen kan forstå; og Python er muligt at læse for mennesker. 
 
 - Denne oversættelse forgår i en mellemform (assembly-sprog), der er **meget** mere besværligt at arbejde med end Python, a la: 
-
-```
-LOAD data
-ADD all values
-DIVIDE by count
-STORE result
-```
-
-Som I maskinkode kunne se således ud: 
-
-```
-10110000 01100001
-```
 
 ---
 
@@ -261,9 +255,10 @@ Oversat til eksplicitte instruktioner:
 > Hvilke salg er større end 10.000 (DKK)?
 
 1. Tag første tal fra listen
-2. Er det større end 10000? Hvis ja, print det
+2. Er det større end 10.000? Hvis ja, print det
 3. Tag næste tal
-3. Gentag indtil listen er tom
+4. Gentag (2)
+5. Gentag 1-4 indtil listen er tom
 
 ---
 
@@ -404,11 +399,11 @@ Men de kan gøre disse simple ting milliarder af gange per sekund uden fejl.
 
 Eks.: *Digitale metoder til kriminalitetsforståelse*
 
-Vi flytter fra **små, lokale undersøgelser** til analyser af **massive datasæt** der kan afsløre mønstre, vi aldrig kunne se før.
+Analytisk går vi går fra **små, lokale undersøgelser** til analyser af **massive datasæt** der kan afsløre mønstre, vi aldrig kunne have set med traditionelle metoder.
 
 ::: {style="font-size: 0.7em;"}
 
-- **Traditionel tilgang**: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå recidiv-mønstre.
+- **Traditionel tilgang**: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå tilbagefald-mønstre.
 
 - **Computational tilgang**: Analyser alle $n$ millioner straffesager fra de sidste 20 år og identificer risikofaktorer for tilbagefald.
 
@@ -470,7 +465,7 @@ scatter = ax.scatter(crime_data['longitude'], crime_data['latitude'],
 
 ax.set_xlabel('Longitude')
 ax.set_ylabel('Latitude')
-ax.set_title('København Kriminalitets Hot Spots\n(Farver viser clusters)')
+ax.set_title('Kriminalitets Hot Spots\n(Farver viser clusters)')
 ax.grid(True, alpha=0.3)
 
 # Tilføj colorbar
@@ -491,40 +486,7 @@ plt.show()
 <div class="code-output" id="output7"></div>
 </div>
 
-## *Predictive* Policing: Algoritmer der forudsiger [data] kriminalitet
-
-<div class="code-container">
-<div class="code-input">
-<textarea class="python-editor" id="code9">
-
-from sklearn.ensemble import RandomForestClassifier
-
-# Features: vejr, tid, lokation, historiske data
-features = ['temperature', 'hour', 'day_of_week', 'previous_crimes_30days', 
-           'unemployment_rate', 'distance_to_school']
-
-# Train model til at forudsige risiko for kriminalitet
-model = RandomForestClassifier(n_estimators=100)
-model.fit(historical_data[features], historical_data['crime_occurred'])
-
-# Forudsig risiko for i morgen
-tomorrow_risk = model.predict_proba(tomorrow_data[features])
-high_risk_areas = tomorrow_data[tomorrow_risk[:, 1] > 0.7]
-
-</textarea>
-<button class="run-button" onclick="runPython(document.getElementById('code9').value, 'output9')">
-  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
-</button>
-<button class="reset-button" onclick="resetPythonGlobals()">
-  <img src="resources/dust.png" alt="Python" style="height: 50px;">
-</button>
-</div>
-<div class="code-output" id="output9"></div>
-</div>
-
-# De store spørgsmål koden ikke selv kan svare på: *Etik og bias*
-
-# Arbejde i UCloud 
+# Arbejde [med Python] i UCloud 
 
 ## Cloud computing and HPC 
 
@@ -534,6 +496,8 @@ high_risk_areas = tomorrow_data[tomorrow_risk[:, 1] > 0.7]
 
 - **UCloud**: En dansk platform udviklet af Syddansk Universitet (SDU) og Aalborg Universitet (AAU). Den gør det muligt for forskere, undervisere og studerende at udnytte HPC-ressourcer på en enkel måde.
 
+::: {style="font-size: 0.7em;"}
+
   - **Køre programmer uden installation**: UCloud tilbyder et bibliotek af applikationer (fx RStudio, Jupyter Notebooks, MATLAB, Stata, Python, osv.), som kan startes direkte i browseren.
 
   - **Brug HPC-ressourcer:** Når du starter en applikation, vælger du selv hvor meget regnekraft (CPU, GPU, RAM) du har brug for. Du arbejder stadig i en browser, men beregningen sker på en HPC-klynge.
@@ -542,13 +506,15 @@ high_risk_areas = tomorrow_data[tomorrow_risk[:, 1] > 0.7]
 
   - **Samarbejde**: Projekter i UCloud kan deles med andre brugere, så man kan arbejde på de samme data og applikationer.
 
+::: 
+
 ## UCLoud i praksis
 
-1. Log ind med WAYF (din universitetslogin).
+1. **Log ind** med WAYF (universitetslogin).
 
-2. Vælg et projekt: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.
+2. **Vælg et projekt**: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.
 
-3. Start en applikation: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.
+3. **Start en applikation**: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.
 
 4. Arbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.
 
