@@ -206,7 +206,7 @@ Maskinen forstår ikke `Python` (?!)
 
 - **Python-fortolkeren** oversætter altså koden til noget som maskinen kan forstå; og Python er muligt at læse for mennesker. 
 
-- Denne oversættelse forgår i en mellemform (assembly-sprog), der er **meget** mere besværligt at arbejde med end Python, a la: 
+- Denne oversættelse forgår i en mellemform (assembly-sprog), der er **meget** mere besværligt at arbejde med end Python. 
 
 ---
 
@@ -367,9 +367,9 @@ def beregn_moms(pris, moms_sats=0.25):
 <div class="code-input">
 <textarea class="python-editor" id="code5">
 
-beregn_moms(12485)
+print(beregn_moms(12485))
 
-beregn_moms(355902, moms_sats=0.12)
+print(beregn_moms(12485, moms_sats=0.12))
 
 </textarea>
 <button class="run-button" onclick="runPython(document.getElementById('code5').value, 'output5')">
@@ -508,7 +508,7 @@ plt.show()
 
 ::: 
 
-## UCLoud i praksis
+## UCloud i praksis
 
 1. **Log ind** med WAYF (universitetslogin).
 

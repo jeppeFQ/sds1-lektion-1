@@ -95,7 +95,7 @@
     "href": "index.html#niveau-4-maskinsprog",
     "title": "Første møde med Python og UCloud",
     "section": "Niveau 4: Maskinsprog",
-    "text": "Niveau 4: Maskinsprog\nMaskinen forstår ikke Python (?!)\n\nComputeren forstår kun maskinkode. Dette er lav-niveau instruktioner bestående af \\(1\\)-taller og \\(0\\)’er (binary), som CPU’en kan arbejde med.\nPython-fortolkeren oversætter altså koden til noget som maskinen kan forstå; og Python er muligt at læse for mennesker.\nDenne oversættelse forgår i en mellemform (assembly-sprog), der er meget mere besværligt at arbejde med end Python, a la:"
+    "text": "Niveau 4: Maskinsprog\nMaskinen forstår ikke Python (?!)\n\nComputeren forstår kun maskinkode. Dette er lav-niveau instruktioner bestående af \\(1\\)-taller og \\(0\\)’er (binary), som CPU’en kan arbejde med.\nPython-fortolkeren oversætter altså koden til noget som maskinen kan forstå; og Python er muligt at læse for mennesker.\nDenne oversættelse forgår i en mellemform (assembly-sprog), der er meget mere besværligt at arbejde med end Python."
   },
   {
     "objectID": "index.html#præcision-er-nøglen",
@@ -157,7 +157,7 @@
     "objectID": "index.html#ucloud-i-praksis",
     "href": "index.html#ucloud-i-praksis",
     "title": "Første møde med Python og UCloud",
-    "section": "UCLoud i praksis",
-    "text": "UCLoud i praksis\n\nLog ind med WAYF (universitetslogin).\nVælg et projekt: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.\nStart en applikation: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.\nArbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.\nGem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer."
+    "section": "UCloud i praksis",
+    "text": "UCloud i praksis\n\nLog ind med WAYF (universitetslogin).\nVælg et projekt: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.\nStart en applikation: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.\nArbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.\nGem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer."
   }
 ]
