@@ -109,14 +109,14 @@
     "href": "index.html#variable-og-pythons-hukommelse",
     "title": "Første møde med Python og UCloud",
     "section": "Variable og Pythons hukommelse",
-    "text": "Variable og Pythons hukommelse\n\ndata virkede i kodeblok nr. 2, uden at vi indlæste den igen.\n\n\ngennemsnit = total / len(data['sales'])\n\n\n\npris = 100\n\nmoms = pris * 0.25\n\ntotal = pris + moms\n\nprint(total)"
+    "text": "Variable og Pythons hukommelse\ndata har virket flere steder i vores kode, selvom vi kun har indlæst den én gang.\n\n\npris = 100\n\nmoms = pris * 0.25\n\ntotal = pris + moms\n\nprint(total)"
   },
   {
     "objectID": "index.html#funktioner-genanvendelige-opskrifter",
     "href": "index.html#funktioner-genanvendelige-opskrifter",
     "title": "Første møde med Python og UCloud",
     "section": "Funktioner: Genanvendelige “opskrifter”",
-    "text": "Funktioner: Genanvendelige “opskrifter”\nDette svarer til at lære maskinen en ny “kommando” [funktion]. Nu kan vi sige beregn_moms(100) og maskinen ved præcist, hvad den skal gøre, fordi vi har defineret hver eneste trin.\n\n\ndef beregn_moms(pris, moms_sats=0.25):\n    return pris * moms_sats"
+    "text": "Funktioner: Genanvendelige “opskrifter”\nDefination af funktioner svarer til at lære maskinen en ny “kommando”. Nu kan vi sige beregn_moms(100) og maskinen ved præcist, hvad den skal gøre, fordi vi har defineret hver eneste trin.\n\n\ndef beregn_moms(pris, moms_sats=0.25):\n    return pris * moms_sats"
   },
   {
     "objectID": "index.html#den-fundamentale-erkendelse-om-maskiner",
@@ -124,5 +124,54 @@
     "title": "Første møde med Python og UCloud",
     "section": "Den fundamentale erkendelse om maskiner",
     "text": "Den fundamentale erkendelse om maskiner\nMaskiner er utroligt dumme men utroligt hurtige og pålidelige. De kan kun gøre simple ting som:\n\nGemme tal\nSammenligne værdier\nHoppe til forskellige dele af koden\nGentage instruktioner\n\nMen de kan gøre disse simple ting milliarder af gange per sekund uden fejl.\nKodningens kunst ligger i at bryde komplekse menneskelige problemer ned til disse simple operationer og derefter komponere dem sammen til kraftfulde løsninger."
+  },
+  {
+    "objectID": "index.html#computational-social-science-digitale-metoder-til-kriminalitetsforståelse",
+    "href": "index.html#computational-social-science-digitale-metoder-til-kriminalitetsforståelse",
+    "title": "Første møde med Python og UCloud",
+    "section": "Computational Social Science (Digitale metoder til kriminalitetsforståelse)",
+    "text": "Computational Social Science (Digitale metoder til kriminalitetsforståelse)\nVi flytter fra små, lokale undersøgelser til analyser af massive datasæt der kan afsløre mønstre, vi aldrig kunne se før.\n\nTraditionel tilgang: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå recidiv-mønstre.\nComputational tilgang: Analyser alle \\(n\\) millioner straffesager fra de sidste 20 år og identificer præcise risikofaktorer for tilbagefald.\n\n\n\n# Find recidiv-mønstre i nationale registre\nurl = \"https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/straffesager_1990_2024.csv\"\n\nrecidiv_data = pd.read_csv(url)\nrisiko_faktorer = recidiv_data.groupby(['alder', 'krimtype', 'tidligere_domme']).agg({\n    'tilbagefald': 'mean',\n    'dage_til_tilbagefald': 'median'\n})"
+  },
+  {
+    "objectID": "index.html#spatial-kriminologi-når-kriminalitet-data-får-koordinater",
+    "href": "index.html#spatial-kriminologi-når-kriminalitet-data-får-koordinater",
+    "title": "Første møde med Python og UCloud",
+    "section": "Spatial kriminologi: Når kriminalitet [data] får koordinater",
+    "text": "Spatial kriminologi: Når kriminalitet [data] får koordinater\n\n\nimport geopandas as gpd\nimport matplotlib.pyplot as plt\n\n# Indlæs kriminalitetsdata med GPS-koordinater\ncrime_data = pd.read_csv(\"copenhagen_crime_2024.csv\")\n\n# Identificer hot spots ved clustering\nfrom sklearn.cluster import DBSCAN\ncoords = crime_data[['latitude', 'longitude']]\nclusters = DBSCAN(eps=0.01, min_samples=10).fit(coords)\n\n# Visualiser på kort\nfig, ax = plt.subplots(figsize=(12, 8))\ncrime_data.plot(ax=ax, c=clusters.labels_, cmap='viridis')"
+  },
+  {
+    "objectID": "index.html#netværksanalyse-kriminelle-organisationer-data-som-grafer",
+    "href": "index.html#netværksanalyse-kriminelle-organisationer-data-som-grafer",
+    "title": "Første møde med Python og UCloud",
+    "section": "Netværksanalyse: Kriminelle organisationer [data] som grafer",
+    "text": "Netværksanalyse: Kriminelle organisationer [data] som grafer\n\n\nimport networkx as nx\n\n# Byg netværk af kriminelle forbindelser\nG = nx.Graph()\nfor _, row in arrest_data.iterrows():\n    G.add_edge(row['person1'], row['person2'], \n               weight=row['co_arrests'])\n\n# Find centrale figurer i netværket\ncentrality = nx.betweenness_centrality(G)\nkey_players = sorted(centrality.items(), \n                    key=lambda x: x[1], reverse=True)[:10]\n\n# Simuler effekt af at arrestere nøglepersoner\noriginal_components = nx.number_connected_components(G)\nG.remove_nodes_from([player[0] for player in key_players[:3]])\nnew_components = nx.number_connected_components(G)"
+  },
+  {
+    "objectID": "index.html#predictive-policing-algoritmer-der-forudsiger-data-kriminalitet",
+    "href": "index.html#predictive-policing-algoritmer-der-forudsiger-data-kriminalitet",
+    "title": "Første møde med Python og UCloud",
+    "section": "Predictive Policing: Algoritmer der forudsiger [data] kriminalitet",
+    "text": "Predictive Policing: Algoritmer der forudsiger [data] kriminalitet\n\n\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Features: vejr, tid, lokation, historiske data\nfeatures = ['temperature', 'hour', 'day_of_week', 'previous_crimes_30days', \n           'unemployment_rate', 'distance_to_school']\n\n# Train model til at forudsige risiko for kriminalitet\nmodel = RandomForestClassifier(n_estimators=100)\nmodel.fit(historical_data[features], historical_data['crime_occurred'])\n\n# Forudsig risiko for i morgen\ntomorrow_risk = model.predict_proba(tomorrow_data[features])\nhigh_risk_areas = tomorrow_data[tomorrow_risk[:, 1] &gt; 0.7]"
+  },
+  {
+    "objectID": "index.html#text-mining-analysere-millioner-af-text-politirapporter",
+    "href": "index.html#text-mining-analysere-millioner-af-text-politirapporter",
+    "title": "Første møde med Python og UCloud",
+    "section": "Text Mining: Analysere millioner af [text] politirapporter",
+    "text": "Text Mining: Analysere millioner af [text] politirapporter\n\n\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.cluster import KMeans\n\n# Indlæs 500,000 politirapporter\nreports = pd.read_csv(\"police_reports_2020_2024.csv\")\n\n# Identificer mønstre i rapporttekster\nvectorizer = TfidfVectorizer(max_features=1000, stop_words='danish')\ntext_vectors = vectorizer.fit_transform(reports['report_text'])\n\n# Cluster lignende kriminalitetstyper\nkmeans = KMeans(n_clusters=15)\nclusters = kmeans.fit_predict(text_vectors)\n\n# Find mest karakteristiske ord for hver cluster\nfeature_names = vectorizer.get_feature_names_out()\nfor i in range(15):\n    cluster_center = kmeans.cluster_centers_[i]\n    top_words = [feature_names[j] for j in cluster_center.argsort()[-10:]]\n    print(f\"Cluster {i}: {', '.join(top_words)}\")"
+  },
+  {
+    "objectID": "index.html#de-store-spørgsmål-etik-og-bias",
+    "href": "index.html#de-store-spørgsmål-etik-og-bias",
+    "title": "Første møde med Python og UCloud",
+    "section": "De store spørgsmål: Etik og bias",
+    "text": "De store spørgsmål: Etik og bias"
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "Første møde med Python og UCloud",
+    "section": "1",
+    "text": "1"
   }
 ]
