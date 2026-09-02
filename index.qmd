@@ -116,7 +116,7 @@ data = pd.read_csv(url)
 # Beregn gennemsnit for hver måned
 monthly_average = data.groupby('month')['sales'].mean()
 print("\nMånedlige gennemsnit:")
-print(monthly_average)
+print(monthly_average) 
 
 </textarea>
 <button class="run-button" onclick="runPython(document.getElementById('code1').value, 'output1')">

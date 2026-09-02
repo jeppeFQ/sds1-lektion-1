@@ -1583,18 +1583,15 @@ Jeppe Fjeldgaard Qvist
 <div class="code-input">
 <textarea class="python-editor" id="code1"># Hent biblioteker
 import pandas as pd
-from io import StringIO
 
 # Hent data fra URL
 url = &quot;https://tinyurl.com/3p843y7k&quot;
-
-data = pd.read_csv(StringIO(csv_data))
+data = pd.read_csv(url)
 
 # Beregn gennemsnit for hver måned
 monthly_average = data.groupby(&#39;month&#39;)[&#39;sales&#39;].mean()
-
 print(&quot;\nMånedlige gennemsnit:&quot;)
-print(monthly_average)
+print(monthly_average) 
 
 </textarea>
 <button class="run-button" onclick="runPython(document.getElementById(&#39;code1&#39;).value, &#39;output1&#39;)">

@@ -46,7 +46,7 @@
     "href": "index.html#python-et-kodesprog",
     "title": "Første møde med Messy Data og Python",
     "section": "Python; et kodesprog",
-    "text": "Python; et kodesprog\n\nTænk på kodning som en meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\n# Hent biblioteker\nimport pandas as pd\nfrom io import StringIO\n\n# Hent data fra URL\nurl = \"https://tinyurl.com/3p843y7k\"\n\ndata = pd.read_csv(StringIO(csv_data))\n\n# Beregn gennemsnit for hver måned\nmonthly_average = data.groupby('month')['sales'].mean()\n\nprint(\"\\nMånedlige gennemsnit:\")\nprint(monthly_average)"
+    "text": "Python; et kodesprog\n\nTænk på kodning som en meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\n# Hent biblioteker\nimport pandas as pd\n\n# Hent data fra URL\nurl = \"https://tinyurl.com/3p843y7k\"\ndata = pd.read_csv(url)\n\n# Beregn gennemsnit for hver måned\nmonthly_average = data.groupby('month')['sales'].mean()\nprint(\"\\nMånedlige gennemsnit:\")\nprint(monthly_average)"
   },
   {
     "objectID": "index.html#reproducerbar",
