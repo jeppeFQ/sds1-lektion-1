@@ -1,11 +1,11 @@
 ---
-title: "Første møde med Python og UCloud"
+title: "Første møde med Messy Data og Python"
 subtitle: ""
 author: "Jeppe Fjeldgaard Qvist"
 date: today
 format: 
   revealjs:
-    include-after-body: "/Users/jeppefl/Library/CloudStorage/OneDrive-AalborgUniversitet/01_work/undervisning/udvikling-it/slides/lektion-1/resources/timer.html"
+    include-after-body: "/Users/jeppefl/Library/CloudStorage/OneDrive-AalborgUniversitet/01_work/01_undervisning/02_sds1/01_slides/lektion-1/resources/timer.html"
     slide-number: c
     show-slide-number: print
     embed-resources: true
@@ -19,6 +19,18 @@ format:
           <link rel="stylesheet" href="resources/pyodide-styles.css">
           <script src="resources/pyodide-setup.js"></script>
 ---
+
+## Social Data Science: Forventninger og formalia 
+
+## Social *Data* Science
+
+## Idébank
+
+[text](link)
+
+Eksempler på data: 
+
+- 
 
 ## Kodning?! 🐍
 
@@ -52,7 +64,7 @@ Når Excel kommer til kort:
 
 <span class="timer" data-time="180"></span>
 
-Tænk på kodning som et *meget detaljeret* opskrift. Så fremfor en abstract "bland ingredienserne" (Excel; peg-og-klik), skriver vi: 
+Tænk på kodning som en *meget detaljeret* opskrift. Så fremfor en abstract "bland ingredienserne" (Excel; peg-og-klik), skriver vi: 
 
 <div class="code-container">
 <div class="code-input">
@@ -394,6 +406,7 @@ Maskiner er utroligt dumme men **utroligt hurtige og pålidelige**. De kan kun g
 Men de kan gøre disse simple ting milliarder af gange per sekund uden fejl.
 
 > **Kodningens kunst** ligger i at bryde komplekse menneskelige problemer ned til disse simple operationer og derefter komponere dem sammen til kraftfulde løsninger.
+
 
 ## *Computational Social Science* 
 

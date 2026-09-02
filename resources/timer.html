@@ -1,0 +1,59 @@
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.timer').forEach(timerElement => {
+            let duration = parseInt(timerElement.dataset.time);
+            let timer = duration;
+            let interval = null;
+            let running = false;
+    
+            function updateDisplay() {
+                let minutes = String(Math.floor(timer / 60)).padStart(2, '0');
+                let seconds = String(timer % 60).padStart(2, '0');
+                timerElement.textContent = minutes + ":" + seconds;
+            }
+    
+            function startTimer() {
+                interval = setInterval(() => {
+                    if (timer > 0) {
+                        timer--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(interval);
+                        running = false;
+                    }
+                }, 1000);
+            }
+    
+            timerElement.textContent = "▶️";
+            timerElement.style.cursor = 'pointer';
+    
+            timerElement.addEventListener('click', () => {
+                if (!running && timer > 0) {
+                    startTimer();
+                    running = true;
+                } else if (running) {
+                    clearInterval(interval);
+                    running = false;
+                }
+            });
+        });
+    });
+    </script>
+    
+    <style>
+    .timer {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 2rem;
+        font-weight: bold;
+        background-color: #191919;
+        color: black;
+        padding: 5px 12px;
+        border-radius: 8px;
+        user-select: none;
+        cursor: pointer;
+        background-color: transparent;
+    }
+    </style>
+
