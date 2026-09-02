@@ -20,6 +20,18 @@ format:
           <script src="resources/pyodide-setup.js"></script>
 ---
 
+## Dagen program 
+
+1. Introduktion til kurset og formalia 
+
+2. Øvelser 
+
+3. Oplæg v/ Helena
+
+4. Introduktion til portfolio og idéudveksling
+
+5. Introduktion til kodning
+
 ## Social Data Science: Forventninger og formalia 
 
 - 10 ECTS (275 timer... spred dem ud)
@@ -36,13 +48,25 @@ format:
 
 ## Idébank
 
-[text](link)
+[Idébanken](https://docs.google.com/spreadsheets/d/1Pdfrz45V1wh774xkecmihCpRUDC597bYkdOP7qF0P_Y/edit?gid=1185058094#gid=1185058094)
 
 Eksempler på data: 
 
 - Taler i folketingssalen
 
-- 
+- Nyhedsindlæg fra interesseorganisationen for turisme og restauration Horesta 
+
+- Indlæg på incles forum
+
+- Jobansøgninger
+
+- Filmanmeldelser
+
+- Tweets/X
+
+- Reddit
+
+- Højreorienterede medier
 
 ## Kodning?! 🐍
 

@@ -1513,6 +1513,16 @@ Jeppe Fjeldgaard Qvist
 
   <p class="date">2026-09-02</p>
 </section>
+<section id="dagen-program" class="slide level2 scrollable">
+<h2>Dagen program</h2>
+<ol type="1">
+<li><p>Introduktion til kurset og formalia</p></li>
+<li><p>Øvelser</p></li>
+<li><p>Oplæg v/ Helena</p></li>
+<li><p>Introduktion til portfolio og idéudveksling</p></li>
+<li><p>Introduktion til kodning</p></li>
+</ol>
+</section>
 <section id="social-data-science-forventninger-og-formalia" class="slide level2">
 <h2>Social Data Science: Forventninger og formalia</h2>
 <ul>
@@ -1528,11 +1538,17 @@ Jeppe Fjeldgaard Qvist
 </section>
 <section id="idébank" class="slide level2">
 <h2>Idébank</h2>
-<p><a href="link">text</a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1Pdfrz45V1wh774xkecmihCpRUDC597bYkdOP7qF0P_Y/edit?gid=1185058094#gid=1185058094">Idébanken</a></p>
 <p>Eksempler på data:</p>
 <ul>
 <li><p>Taler i folketingssalen</p></li>
-<li></li>
+<li><p>Nyhedsindlæg fra interesseorganisationen for turisme og restauration Horesta</p></li>
+<li><p>Indlæg på incles forum</p></li>
+<li><p>Jobansøgninger</p></li>
+<li><p>Filmanmeldelser</p></li>
+<li><p>Tweets/X</p></li>
+<li><p>Reddit</p></li>
+<li><p>Højreorienterede medier</p></li>
 </ul>
 </section>
 <section id="kodning" class="slide level2">
@@ -1905,8 +1921,8 @@ print(risiko_faktorer)
 </div>
 </div>
 </section>
-<section id="spatial-kriminologi-når-kriminalitet-data-får-koordinater" class="slide level2">
-<h2><em>Spatial</em> kriminologi: Når kriminalitet [data] får koordinater</h2>
+<section id="eksempel-på-visualisering-når-data-får-koordinater" class="slide level2">
+<h2>Eksempel på visualisering: Når [data] får koordinater</h2>
 <div class="code-container">
 <div class="code-input">
 <textarea class="python-editor" id="code7">import pandas as pd
@@ -1955,40 +1971,46 @@ plt.show()
 
 </div>
 </div>
-</section>
-<section>
-<section id="arbejde-med-python-i-ucloud" class="title-slide slide level1 center">
-<h1>Arbejde [med Python] i UCloud</h1>
+<!----
+
+# Arbejde [med Python] i UCloud 
+
+## Cloud computing and HPC 
+
+- **HPC**: At bruge mange kraftige computere, som er koblet sammen i store klynger (clusters), til at løse komplekse og krævende opgaver.
+
+- **Cloud computing**: Adgang til computerressourcer (fx programmer, lagerplads og regnekraft) via internettet, fremfor at have det hele installeret på sin egen computer.
+
+- **UCloud**: En dansk platform udviklet af Syddansk Universitet (SDU) og Aalborg Universitet (AAU). Den gør det muligt for forskere, undervisere og studerende at udnytte HPC-ressourcer på en enkel måde.
+
+::: {style="font-size: 0.7em;"}
+
+  - **Køre programmer uden installation**: UCloud tilbyder et bibliotek af applikationer (fx RStudio, Jupyter Notebooks, MATLAB, Stata, Python, osv.), som kan startes direkte i browseren.
+
+  - **Brug HPC-ressourcer:** Når du starter en applikation, vælger du selv hvor meget regnekraft (CPU, GPU, RAM) du har brug for. Du arbejder stadig i en browser, men beregningen sker på en HPC-klynge.
+
+  - **Datahåndtering**: Du kan uploade, downloade og organisere dine data direkte i UCloud. Der er også muligheder for sikker deling af data med kolleger.
+
+  - **Samarbejde**: Projekter i UCloud kan deles med andre brugere, så man kan arbejde på de samme data og applikationer.
+
+::: 
+
+## UCloud i praksis
+
+1. **Log ind** med WAYF (universitetslogin).
+
+2. **Vælg et projekt**: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.
+
+3. **Start en applikation**: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.
+
+4. Arbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.
+
+5. Gem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer.
+
+---->
+
 
 </section>
-<section id="cloud-computing-and-hpc" class="slide level2">
-<h2>Cloud computing and HPC</h2>
-<ul>
-<li><p><strong>HPC</strong>: At bruge mange kraftige computere, som er koblet sammen i store klynger (clusters), til at løse komplekse og krævende opgaver.</p></li>
-<li><p><strong>Cloud computing</strong>: Adgang til computerressourcer (fx programmer, lagerplads og regnekraft) via internettet, fremfor at have det hele installeret på sin egen computer.</p></li>
-<li><p><strong>UCloud</strong>: En dansk platform udviklet af Syddansk Universitet (SDU) og Aalborg Universitet (AAU). Den gør det muligt for forskere, undervisere og studerende at udnytte HPC-ressourcer på en enkel måde.</p></li>
-</ul>
-<div style="font-size: 0.7em;">
-<ul>
-<li><p><strong>Køre programmer uden installation</strong>: UCloud tilbyder et bibliotek af applikationer (fx RStudio, Jupyter Notebooks, MATLAB, Stata, Python, osv.), som kan startes direkte i browseren.</p></li>
-<li><p><strong>Brug HPC-ressourcer:</strong> Når du starter en applikation, vælger du selv hvor meget regnekraft (CPU, GPU, RAM) du har brug for. Du arbejder stadig i en browser, men beregningen sker på en HPC-klynge.</p></li>
-<li><p><strong>Datahåndtering</strong>: Du kan uploade, downloade og organisere dine data direkte i UCloud. Der er også muligheder for sikker deling af data med kolleger.</p></li>
-<li><p><strong>Samarbejde</strong>: Projekter i UCloud kan deles med andre brugere, så man kan arbejde på de samme data og applikationer.</p></li>
-</ul>
-</div>
-</section>
-<section id="ucloud-i-praksis" class="slide level2 scrollable">
-<h2>UCloud i praksis</h2>
-<ol type="1">
-<li><p><strong>Log ind</strong> med WAYF (universitetslogin).</p></li>
-<li><p><strong>Vælg et projekt</strong>: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.</p></li>
-<li><p><strong>Start en applikation</strong>: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.</p></li>
-<li><p>Arbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.</p></li>
-<li><p>Gem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer.</p></li>
-</ol>
-
-
-</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

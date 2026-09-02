@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "index.html#dagen-program",
+    "href": "index.html#dagen-program",
+    "title": "Første møde med Messy Data og Python",
+    "section": "Dagen program",
+    "text": "Dagen program\n\nIntroduktion til kurset og formalia\nØvelser\nOplæg v/ Helena\nIntroduktion til portfolio og idéudveksling\nIntroduktion til kodning"
+  },
+  {
     "objectID": "index.html#social-data-science-forventninger-og-formalia",
     "href": "index.html#social-data-science-forventninger-og-formalia",
     "title": "Første møde med Messy Data og Python",
@@ -18,7 +25,7 @@
     "href": "index.html#idébank",
     "title": "Første møde med Messy Data og Python",
     "section": "Idébank",
-    "text": "Idébank\ntext\nEksempler på data:\n\nTaler i folketingssalen"
+    "text": "Idébank\nIdébanken\nEksempler på data:\n\nTaler i folketingssalen\nNyhedsindlæg fra interesseorganisationen for turisme og restauration Horesta\nIndlæg på incles forum\nJobansøgninger\nFilmanmeldelser\nTweets/X\nReddit\nHøjreorienterede medier"
   },
   {
     "objectID": "index.html#kodning",
@@ -161,24 +168,10 @@
     "text": "Computational Social Science\nEks.: Digitale metoder til kriminalitetsforståelse\nAnalytisk går vi går fra små, lokale undersøgelser til analyser af massive datasæt der kan afsløre mønstre, vi aldrig kunne have set med traditionelle metoder.\n\n\nTraditionel tilgang: En kriminolog interviewer 50 tidligere indsatte over 6 måneder for at forstå tilbagefald-mønstre.\nComputational tilgang: Analyser alle \\(n\\) millioner straffesager fra de sidste 20 år og identificer risikofaktorer for tilbagefald.\n\n\n\n\n# Find tilbagefalds-mønstre i nationale registre\nurl = \"https://tinyurl.com/3ja8pcfv\"\n\nrecidiv_data = pd.read_csv(url)\n\nrisiko_faktorer = recidiv_data.groupby(['krimtype', 'tidligere_domme']).agg({\n    'dage_til_tilbagefald': 'median'\n})\n\nprint(risiko_faktorer)"
   },
   {
-    "objectID": "index.html#spatial-kriminologi-når-kriminalitet-data-får-koordinater",
-    "href": "index.html#spatial-kriminologi-når-kriminalitet-data-får-koordinater",
+    "objectID": "index.html#eksempel-på-visualisering-når-data-får-koordinater",
+    "href": "index.html#eksempel-på-visualisering-når-data-får-koordinater",
     "title": "Første møde med Messy Data og Python",
-    "section": "Spatial kriminologi: Når kriminalitet [data] får koordinater",
-    "text": "Spatial kriminologi: Når kriminalitet [data] får koordinater\n\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom sklearn.cluster import DBSCAN\nfrom io import StringIO\n\nurl = \"https://tinyurl.com/4r8tj95v\"\ncrime_data = pd.read_csv(url)  \n\ncoords = crime_data[['latitude', 'longitude']]\nclusters = DBSCAN(eps=0.005, min_samples=2).fit(coords)\n\n# Visualiser på kort\nfig, ax = plt.subplots(figsize=(12, 8))\n\nscatter = ax.scatter(crime_data['longitude'], crime_data['latitude'], \n                    c=clusters.labels_, \n                    cmap='viridis', \n                    alpha=0.7, \n                    s=60, \n                    edgecolors='black', \n                    linewidth=0.5)\n\nax.set_xlabel('Longitude')\nax.set_ylabel('Latitude')\nax.set_title('Kriminalitets Hot Spots\\n(Farver viser clusters)')\nax.grid(True, alpha=0.3)\n\n# Tilføj colorbar\ncbar = plt.colorbar(scatter)\ncbar.set_label('Cluster ID (-1 = støj/outliers)')\n\nplt.tight_layout()\nplt.show()"
-  },
-  {
-    "objectID": "index.html#cloud-computing-and-hpc",
-    "href": "index.html#cloud-computing-and-hpc",
-    "title": "Første møde med Messy Data og Python",
-    "section": "Cloud computing and HPC",
-    "text": "Cloud computing and HPC\n\nHPC: At bruge mange kraftige computere, som er koblet sammen i store klynger (clusters), til at løse komplekse og krævende opgaver.\nCloud computing: Adgang til computerressourcer (fx programmer, lagerplads og regnekraft) via internettet, fremfor at have det hele installeret på sin egen computer.\nUCloud: En dansk platform udviklet af Syddansk Universitet (SDU) og Aalborg Universitet (AAU). Den gør det muligt for forskere, undervisere og studerende at udnytte HPC-ressourcer på en enkel måde.\n\n\n\nKøre programmer uden installation: UCloud tilbyder et bibliotek af applikationer (fx RStudio, Jupyter Notebooks, MATLAB, Stata, Python, osv.), som kan startes direkte i browseren.\nBrug HPC-ressourcer: Når du starter en applikation, vælger du selv hvor meget regnekraft (CPU, GPU, RAM) du har brug for. Du arbejder stadig i en browser, men beregningen sker på en HPC-klynge.\nDatahåndtering: Du kan uploade, downloade og organisere dine data direkte i UCloud. Der er også muligheder for sikker deling af data med kolleger.\nSamarbejde: Projekter i UCloud kan deles med andre brugere, så man kan arbejde på de samme data og applikationer."
-  },
-  {
-    "objectID": "index.html#ucloud-i-praksis",
-    "href": "index.html#ucloud-i-praksis",
-    "title": "Første møde med Messy Data og Python",
-    "section": "UCloud i praksis",
-    "text": "UCloud i praksis\n\nLog ind med WAYF (universitetslogin).\nVælg et projekt: Al arbejde i UCloud foregår i projekter, hvor du kan organisere applikationer, data og brugere.\nStart en applikation: Fx Jupyter, og vælg hvor meget regnekraft du skal bruge.\nArbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.\nGem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer."
+    "section": "Eksempel på visualisering: Når [data] får koordinater",
+    "text": "Eksempel på visualisering: Når [data] får koordinater\n\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom sklearn.cluster import DBSCAN\nfrom io import StringIO\n\nurl = \"https://tinyurl.com/4r8tj95v\"\ncrime_data = pd.read_csv(url)  \n\ncoords = crime_data[['latitude', 'longitude']]\nclusters = DBSCAN(eps=0.005, min_samples=2).fit(coords)\n\n# Visualiser på kort\nfig, ax = plt.subplots(figsize=(12, 8))\n\nscatter = ax.scatter(crime_data['longitude'], crime_data['latitude'], \n                    c=clusters.labels_, \n                    cmap='viridis', \n                    alpha=0.7, \n                    s=60, \n                    edgecolors='black', \n                    linewidth=0.5)\n\nax.set_xlabel('Longitude')\nax.set_ylabel('Latitude')\nax.set_title('Kriminalitets Hot Spots\\n(Farver viser clusters)')\nax.grid(True, alpha=0.3)\n\n# Tilføj colorbar\ncbar = plt.colorbar(scatter)\ncbar.set_label('Cluster ID (-1 = støj/outliers)')\n\nplt.tight_layout()\nplt.show()"
   }
 ]
