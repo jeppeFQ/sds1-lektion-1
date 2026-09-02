@@ -22,6 +22,16 @@ format:
 
 ## Social Data Science: Forventninger og formalia 
 
+- 10 ECTS (275 timer... spred dem ud)
+
+- 10 forelæsninger + seminardage
+
+- 3 undervisere
+
+- Mundtlig eksamen pba. portfolio
+
+- AI-positivt med klare forbehold
+
 ## Social *Data* Science
 
 ## Idébank
@@ -29,6 +39,8 @@ format:
 [text](link)
 
 Eksempler på data: 
+
+- Taler i folketingssalen
 
 - 
 
@@ -448,7 +460,7 @@ print(risiko_faktorer)
 <div class="code-output" id="output6"></div>
 </div>
 
-## *Spatial* kriminologi: Når kriminalitet [data] får koordinater
+## Eksempel på visualisering: Når [data] får koordinater
 
 <div class="code-container">
 <div class="code-input">
@@ -499,6 +511,8 @@ plt.show()
 <div class="code-output" id="output7"></div>
 </div>
 
+<!----
+
 # Arbejde [med Python] i UCloud 
 
 ## Cloud computing and HPC 
@@ -532,3 +546,5 @@ plt.show()
 4. Arbejd som normalt i applikationen, men med adgang til langt kraftigere ressourcer end din egen computer.
 
 5. Gem og del resultater: alt bliver gemt i dit projekt, og kan deles med andre eller eksporteres til lokal computer.
+
+---->

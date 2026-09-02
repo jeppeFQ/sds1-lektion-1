@@ -55,12 +55,10 @@ async function initPyodide() {
 
     console.log('Pyodide indlæst korrekt');
 
-    console.log('Indlæser micropip...');
     await pyodide.loadPackage("micropip");
     console.log('micropip indlæst');
 
-    const testResult = pyodide.runPython('2 + 2');
-    if (testResult !== 4) {
+    if (pyodide.runPython('2 + 2') !== 4) {
       throw new Error('Pyodide-test mislykkedes');
     }
 
@@ -100,16 +98,20 @@ async function setupEnvironment(outputElement) {
 
   await pyodide.runPythonAsync(`
 import sys
-from io import StringIO, BytesIO
 import base64
+from io import StringIO, BytesIO
 from pyodide.http import pyfetch
 import pandas as pd
+import numpy as np
 
 import matplotlib
 matplotlib.use('AGG')
 import matplotlib.pyplot as plt
 
 
+# ---------------------------------------------------------------
+# Plots i browseren
+# ---------------------------------------------------------------
 def show_plot():
     buf = BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight', dpi=100)
@@ -124,6 +126,50 @@ def show_plot():
 plt.show = lambda *args, **kwargs: show_plot()
 
 
+# ---------------------------------------------------------------
+# URL-cache: pd.read_csv("https://...") virker som i en rigtig
+# Python-session. JS henter indholdet med pyfetch og lægger det
+# i _url_cache, inden brugerens kode køres.
+# ---------------------------------------------------------------
+_url_cache = {}
+_original_read_csv = pd.read_csv
+
+
+def _patched_read_csv(filepath_or_buffer, *args, **kwargs):
+    is_url = (
+        isinstance(filepath_or_buffer, str)
+        and filepath_or_buffer.startswith(('http://', 'https://'))
+    )
+    if not is_url:
+        return _original_read_csv(filepath_or_buffer, *args, **kwargs)
+
+    if filepath_or_buffer not in _url_cache:
+        raise ValueError(
+            f"Data fra {filepath_or_buffer} blev ikke hentet. "
+            "URL'en skal stå som en almindelig streng i kodefeltet."
+        )
+
+    text = _url_cache[filepath_or_buffer]
+
+    # Ingen sep angivet: lad pandas selv finde skilletegnet,
+    # med komma som sikkerhedsnet hvis sniffingen fejler.
+    if 'sep' not in kwargs and 'delimiter' not in kwargs:
+        try:
+            return _original_read_csv(
+                StringIO(text), *args, sep=None, engine='python', **kwargs
+            )
+        except Exception:
+            return _original_read_csv(StringIO(text), *args, sep=',', **kwargs)
+
+    return _original_read_csv(StringIO(text), *args, **kwargs)
+
+
+pd.read_csv = _patched_read_csv
+
+
+# ---------------------------------------------------------------
+# Sentiment
+# ---------------------------------------------------------------
 class SimpleSentimentAnalyzer:
     def __init__(self):
         self.positive_words = {
@@ -204,19 +250,19 @@ class SimpleSentimentAnalyzer:
 fallback_analyzer = SimpleSentimentAnalyzer()
 analyzer = fallback_analyzer
 
-# Bemærk: except Exception, ikke ImportError. NLTK's VADER importerer fint,
+# except Exception, ikke ImportError: NLTK's VADER importerer fint,
 # men fejler med LookupError i __init__ hvis leksikonet mangler.
 try:
     from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
     analyzer = SentimentIntensityAnalyzer()
     print("vaderSentiment analyzer indlæst")
-except Exception as first_error:
+except Exception as _first_error:
     try:
         from nltk.sentiment.vader import SentimentIntensityAnalyzer
         analyzer = SentimentIntensityAnalyzer()
         print("NLTK VADER analyzer indlæst")
     except Exception:
-        print(f"Bruger indbygget fallback-analyzer ({type(first_error).__name__})")
+        print(f"Bruger indbygget fallback-analyzer ({type(_first_error).__name__})")
 
 import builtins
 builtins.analyzer = analyzer
@@ -239,60 +285,39 @@ const PACKAGE_MAP = {
   'vaderSentiment': 'vaderSentiment',
   'wordcloud': 'wordcloud',
   'plotly': 'plotly',
-  'bokeh': 'bokeh'
+  'bokeh': 'bokeh',
+  'statsmodels': 'statsmodels'
 };
 
-const FALLBACK_DATA_CODE = `
-# Fallback-data i Amazon review-format
-import pandas as pd
-
-sample_data = {
-    'review': [
-        "This product exceeded my expectations! Amazing quality and fast delivery. Worth every penny!",
-        "Absolute garbage. Broke within hours of use. Complete waste of money and time.",
-        "Pretty decent for the price point. Nothing extraordinary but gets the job done adequately.",
-        "Outstanding quality! Best purchase I've made this year. Highly recommend to everyone.",
-        "Terrible customer service experience. Product arrived damaged and return process was nightmare.",
-        "Great value for money proposition. Quality exceeds expectations for this price range.",
-        "Somewhat disappointing overall. Expected much better quality based on reviews and price point.",
-        "Perfect in every way! Exactly what I needed. Will definitely purchase again soon.",
-        "Not worth the investment. Cheap materials and poor construction quality throughout.",
-        "Excellent product with incredibly fast shipping! Great packaging and customer care.",
-        "Average product but significantly overpriced. Better alternatives available in market.",
-        "Fantastic quality and attention to detail! Company clearly cares about customer satisfaction.",
-        "Received defective item unfortunately. Had to return immediately for full refund.",
-        "Good product overall with minor issues. Generally satisfied with purchase decision.",
-        "Absolutely love this purchase! Exceeded expectations in every possible way imaginable!",
-        "Poor build quality evident immediately. Would not recommend to anyone unfortunately.",
-        "Solid product that delivers exactly what promised. No complaints or issues whatsoever.",
-        "Disappointing experience overall unfortunately. Product did not meet basic expectations.",
-        "Amazing customer support team! Product works perfectly and arrived quickly as promised.",
-        "Waste of money completely. Save yourself trouble and buy something else instead."
-    ],
-    'sentiment': [1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
-    'rating': [5, 1, 3, 5, 1, 4, 2, 5, 1, 5, 3, 5, 1, 4, 5, 2, 4, 2, 5, 1]
+function detectUrls(code) {
+  const urls = new Set();
+  const pattern = /["'](https?:\/\/[^"'\s]+)["']/g;
+  let match;
+  while ((match = pattern.exec(code)) !== null) {
+    urls.add(match[1]);
+  }
+  return Array.from(urls);
 }
 
-df = pd.DataFrame(sample_data)
-print("Bruger indbygget eksempeldata")
-print(f"Datasæt: {df.shape}")
-`;
+async function prefetchUrls(urls, outputElement) {
+  for (const url of urls) {
+    const alreadyCached = pyodide.runPython(
+      `${JSON.stringify(url)} in _url_cache`
+    );
+    if (alreadyCached) continue;
 
-function detectUrls(code) {
-  const urlPatterns = [
-    /url\s*=\s*["']([^"']+)["']/g,
-    /pd\.read_csv\(\s*["']([^"']*https?:\/\/[^"']+)["']/g,
-    /["']([^"']*https?:\/\/[^"']*\.(?:csv|tsv)[^"']*)["']/g
-  ];
+    outputElement.innerHTML = `Henter data fra ${url}...`;
 
-  const urls = new Set();
-  urlPatterns.forEach(pattern => {
-    let match;
-    while ((match = pattern.exec(code)) !== null) {
-      urls.add(match[1]);
-    }
-  });
-  return Array.from(urls);
+    await pyodide.runPythonAsync(`
+_u = ${JSON.stringify(url)}
+_response = await pyfetch(_u)
+if _response.status != 200:
+    raise Exception(f"HTTP {_response.status}")
+_url_cache[_u] = await _response.string()
+    `);
+
+    console.log(`Data hentet: ${url}`);
+  }
 }
 
 async function runPython(code, outputId) {
@@ -322,44 +347,19 @@ async function runPython(code, outputId) {
       }
     }
 
-    let processedCode = code;
+    // Hent alle URL'er i koden ned i cachen. Fejler det, stopper vi
+    // med en tydelig besked frem for at køre videre på andre data.
     const urls = detectUrls(code);
-
     if (urls.length > 0) {
-      outputElement.innerHTML = `Henter data fra URL: ${urls[0]}...`;
-
       try {
-        await pyodide.runPythonAsync(`
-response = await pyfetch("${urls[0]}")
-if response.status != 200:
-    raise Exception(f"HTTP {response.status}: kunne ikke hente data")
-
-csv_data = await response.string()
-print(f"Hentede {len(csv_data)} tegn fra URL")
-        `);
-
-        processedCode = processedCode
-          .replace(/^\s*url\s*=\s*["'][^"']+["'].*$/gm, '# URL-data hentet ovenfor')
-          .replace(
-            /pd\.read_csv\(\s*url\s*[^)]*\)/g,
-            'pd.read_csv(StringIO(csv_data), sep="\\t", quoting=3, encoding="utf-8")'
-          )
-          .replace(
-            /pd\.read_csv\(\s*["'][^"']*https?:\/\/[^"']+["'][^)]*\)/g,
-            'pd.read_csv(StringIO(csv_data), sep="\\t", quoting=3, encoding="utf-8")'
-          );
-
-        outputElement.innerHTML = "Data hentet! Kører kode...";
-
+        await prefetchUrls(urls, outputElement);
       } catch (error) {
-        console.error('Kunne ikke hente URL-data:', error);
         outputElement.innerHTML =
-          `<span style="color: orange;">Kunne ikke hente data (${error.message}). Bruger eksempeldata...</span>`;
-
-        // Rigtigt linjeskift, ikke literal backslash-n
-        processedCode = FALLBACK_DATA_CODE + "\n" + processedCode
-          .replace(/^\s*url\s*=\s*["'][^"']+["'].*$/gm, '')
-          .replace(/^\s*df\s*=\s*pd\.read_csv.*$/gm, '# Bruger eksempeldata ovenfor');
+          `<span style="color: red;">Kunne ikke hente data: ${error.message}<br>` +
+          `Tjek at URL'en er korrekt, og at serveren tillader CORS ` +
+          `(fx raw.githubusercontent.com).</span>`;
+        console.error('Datahentning fejlede:', error);
+        return;
       }
     }
 
@@ -373,12 +373,12 @@ sys.stdout = StringIO()
 
     let result;
     try {
-      await pyodide.runPythonAsync(processedCode);
+      await pyodide.runPythonAsync(code);
     } finally {
       result = pyodide.runPython(`
-output = sys.stdout.getvalue()
+_output = sys.stdout.getvalue()
 sys.stdout = sys.__stdout__
-output
+_output
       `);
     }
 
