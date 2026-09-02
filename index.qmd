@@ -20,7 +20,7 @@ format:
           <script src="resources/pyodide-setup.js"></script>
 ---
 
-## Dagen program 
+## Dagens program 
 
 1. Introduktion til kurset og formalia 
 
@@ -108,16 +108,13 @@ Tænk på kodning som en *meget detaljeret* opskrift. Så fremfor en abstract "b
 
 # Hent biblioteker
 import pandas as pd
-from io import StringIO
 
 # Hent data fra URL
 url = "https://tinyurl.com/3p843y7k"
-
-data = pd.read_csv(StringIO(csv_data))
+data = pd.read_csv(url)
 
 # Beregn gennemsnit for hver måned
 monthly_average = data.groupby('month')['sales'].mean()
-
 print("\nMånedlige gennemsnit:")
 print(monthly_average)
 
