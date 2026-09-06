@@ -3,33 +3,61 @@
    Editor til venstre, output til hoejre.
 
    Aktiveres ved at pakke en kodecelle ind i:
+
    ::: {.kode-split}
    ```{pyodide}
    ...
    ```
    :::
+
+   DOM-strukturen i quarto-live (barn 1-3 af .exercise-cell):
+     div.exercise-cell
+       div.observablehq                        <- 1: editoren
+       div.quarto-ojs-hide.observablehq        <- 2: skjult hjaelpeelement
+       div.observablehq                        <- 3: outputtet
    ------------------------------------------------------------------ */
 
-.kode-split .cell,
-.kode-split .exercise-cell,
-.kode-split .quarto-live-cell {
+/* ---- Grid-containeren ------------------------------------------- */
+
+.kode-split .exercise-cell {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: 3fr 3fr;   /* venstre = kode, hoejre = output */
+  gap: 0 1rem;
+  align-content: start;
 }
 
-/* Editoren fylder venstre kolonne */
-.kode-split .cm-editor,
-.kode-split .exercise-editor {
+/* ---- Venstre kolonne: editoren ---------------------------------- */
+
+.kode-split .exercise-cell > .observablehq:nth-child(1) {
   grid-column: 1;
-  min-width: 0;
+  grid-row: 1 / -1;
+  align-self: start;
+  min-width: 0;                     /* tillader kolonnen at blive smal */
 }
 
-/* Output fylder hoejre kolonne */
-.kode-split .cell-output,
-.kode-split .exercise-cell-output,
-.kode-split .cell-output-display {
+.kode-split .exercise-editor {
+  margin: 0 !important;             /* overskriver .my-3 fra bootstrap */
+}
+
+.kode-split .exercise-editor .cm-editor {
+  font-size: 0.65em;
+}
+
+.kode-split .exercise-editor-header {
+  font-size: 0.7em;
+}
+
+/* ---- Skjult hjaelpeelement: skal ikke optage plads i grid'et ----- */
+/* Virker layoutet forkert, saa fjern denne regel og giv elementet
+   grid-column: 1 i stedet.                                          */
+
+.kode-split .exercise-cell > .quarto-ojs-hide {
+  display: none;
+}
+
+/* ---- Hoejre kolonne: outputtet ---------------------------------- */
+
+.kode-split .exercise-cell > .observablehq:nth-child(3) {
   grid-column: 2;
   grid-row: 1;
   min-width: 0;
@@ -37,40 +65,31 @@
   max-height: 55vh;
 }
 
-/* Knapraekken skal blive i venstre kolonne under editoren */
-.kode-split .exercise-editor-toolbar,
-.kode-split .cell-toolbar {
-  grid-column: 1;
-}
-
-/* Mindre skrift i editor og output, saa der er plads til to kolonner */
-.kode-split .cm-editor {
-  font-size: 0.55em;
-}
-
-.kode-split .cell-output pre,
-.kode-split .exercise-cell-output pre {
+.kode-split .exercise-cell > .observablehq:nth-child(3) pre {
   font-size: 0.65em;
   margin: 0;
+  white-space: pre-wrap;            /* fjern hvis pandas-tabeller roder */
 }
 
-/* Plots skal skaleres ned i den smallere kolonne */
-.kode-split .cell-output img {
+/* Plots skaleres ned til kolonnebredden */
+.kode-split .exercise-cell img,
+.kode-split .exercise-cell svg,
+.kode-split .exercise-cell canvas {
   max-width: 100%;
   height: auto;
 }
 
-/* Paa smalle skaerme: fald tilbage til en enkelt kolonne */
+/* ---- Smalle skaerme: fald tilbage til en enkelt kolonne ---------- */
+
 @media (max-width: 900px) {
-  .kode-split .cell,
-  .kode-split .exercise-cell,
-  .kode-split .quarto-live-cell {
-    grid-template-columns: 1fr 2fr;
+  .kode-split .exercise-cell {
+    grid-template-columns: 1fr;
   }
 
-  .kode-split .cell-output,
-  .kode-split .exercise-cell-output {
+  .kode-split .exercise-cell > .observablehq:nth-child(1),
+  .kode-split .exercise-cell > .observablehq:nth-child(3) {
     grid-column: 1;
     grid-row: auto;
+    max-height: none;
   }
 }
