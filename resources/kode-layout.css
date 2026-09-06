@@ -1,0 +1,76 @@
+/* ------------------------------------------------------------------
+   To-kolonne-layout for quarto-live kodeceller
+   Editor til venstre, output til hoejre.
+
+   Aktiveres ved at pakke en kodecelle ind i:
+   ::: {.kode-split}
+   ```{pyodide}
+   ...
+   ```
+   :::
+   ------------------------------------------------------------------ */
+
+.kode-split .cell,
+.kode-split .exercise-cell,
+.kode-split .quarto-live-cell {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* Editoren fylder venstre kolonne */
+.kode-split .cm-editor,
+.kode-split .exercise-editor {
+  grid-column: 1;
+  min-width: 0;
+}
+
+/* Output fylder hoejre kolonne */
+.kode-split .cell-output,
+.kode-split .exercise-cell-output,
+.kode-split .cell-output-display {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  overflow: auto;
+  max-height: 55vh;
+}
+
+/* Knapraekken skal blive i venstre kolonne under editoren */
+.kode-split .exercise-editor-toolbar,
+.kode-split .cell-toolbar {
+  grid-column: 1;
+}
+
+/* Mindre skrift i editor og output, saa der er plads til to kolonner */
+.kode-split .cm-editor {
+  font-size: 0.55em;
+}
+
+.kode-split .cell-output pre,
+.kode-split .exercise-cell-output pre {
+  font-size: 0.65em;
+  margin: 0;
+}
+
+/* Plots skal skaleres ned i den smallere kolonne */
+.kode-split .cell-output img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Paa smalle skaerme: fald tilbage til en enkelt kolonne */
+@media (max-width: 900px) {
+  .kode-split .cell,
+  .kode-split .exercise-cell,
+  .kode-split .quarto-live-cell {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .kode-split .cell-output,
+  .kode-split .exercise-cell-output {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

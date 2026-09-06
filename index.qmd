@@ -3,22 +3,26 @@ title: "Første møde med Messy Data og Python"
 subtitle: ""
 author: "Jeppe Fjeldgaard Qvist"
 date: today
+engine: knitr
 format: 
-  revealjs:
-    include-after-body: "/Users/jeppefl/Library/CloudStorage/OneDrive-AalborgUniversitet/01_work/01_undervisning/02_sds1/01_slides/lektion-1/resources/timer.html"
+  live-revealjs:
+    css: resources/kode-layout.css
+    include-after-body: "resources/timer.html"
     slide-number: c
     show-slide-number: print
-    embed-resources: true
-    self-contained-math: true
     smaller: true
     scrollable: true
     theme: default
-    include-in-header: 
-      - text: |
-          <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-          <link rel="stylesheet" href="resources/pyodide-styles.css">
-          <script src="resources/pyodide-setup.js"></script>
+pyodide:
+  packages:
+    - pandas
+    - matplotlib
+webr:
+  packages:
+    - dplyr
 ---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
 ## Dagens program 
 
@@ -96,40 +100,51 @@ Når Excel kommer til kort:
 
 - Lave avancerede statistiske modeller.
 
-## Python; et kodesprog 
+## Et kodesprog
 
 <span class="timer" data-time="180"></span>
 
-Tænk på kodning som en *meget detaljeret* opskrift. Så fremfor en abstract "bland ingredienserne" (Excel; peg-og-klik), skriver vi: 
+Tænk på kodning som en *meget detaljeret* opskrift. Fremfor en abstrakt "bland ingredienserne" (Excel; peg-og-klik), skriver vi:
 
-<div class="code-container">
-<div class="code-input">
-<textarea class="python-editor" id="code1">
+::: {.panel-tabset}
 
-# Hent biblioteker
+### Python
+
+::: {.kode-split}
+
+```{pyodide}
+#| autorun: false
+# Hent bibliotek
 import pandas as pd
 
 # Hent data fra URL
-url = "https://tinyurl.com/3p843y7k"
+url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/sales_data.csv"
 data = pd.read_csv(url)
 
 # Beregn gennemsnit for hver måned
 monthly_average = data.groupby('month')['sales'].mean()
-print("\nMånedlige gennemsnit:")
-print(monthly_average) 
+print(monthly_average)
+```
 
-</textarea>
-<button class="run-button" onclick="runPython(document.getElementById('code1').value, 'output1')">
-  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
-</button>
-<button class="reset-button" onclick="resetPythonGlobals()">
-  <img src="resources/dust.png" alt="Python" style="height: 50px;">
-</button>
-</div>
-<div class="code-output" id="output1"></div>
-</div>
+:::
 
+### R
 
+::: {.kode-split}
+
+```{webr}
+#| autorun: false
+# Hent data fra URL
+url <- "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/refs/heads/master/resources/sales_data.csv"
+data <- read.csv(url)
+
+# Beregn gennemsnit for hver måned
+aggregate(sales ~ month, data = data, FUN = mean)
+```
+
+:::
+
+:::
 
 ## Reproducerbar
 
@@ -153,7 +168,7 @@ Flere rækker kræver dog logisk nok mere computerkraft og tid.
 
 ## Fleksibilitet
 
-*Python har tusindvis af specialiserede "værktøjskasser" (biblioteker) til alt fra grundlæggende statistik og datahåndtering til machine learning og kunstig intelligens.*
+*Python og R har tusindvis af specialiserede "værktøjskasser" (biblioteker/pakker) til alt fra grundlæggende statistik og datahåndtering til machine learning og kunstig intelligens.*
 
 ## Automatisering 
 
@@ -168,7 +183,6 @@ I skal på kurset oparbejde en **algoritmisk tænkning**.
 ---
 
 <span class="timer" data-time="180"></span>
-
 
 ::: {.incremental}
 
@@ -199,82 +213,95 @@ Analytisk går vi går fra **små, lokale undersøgelser** til analyser af **mas
 
 :::
 
-<div class="code-container">
-<div class="code-input">
-<textarea class="python-editor" id="code6">
+::: {.panel-tabset}
 
-# Find tilbagefalds-mønstre i nationale registre
-url = "https://tinyurl.com/3ja8pcfv"
+### Python
 
+::: {.kode-split}
+
+```{pyodide}
+#| autorun: false
+import pandas as pd
+
+url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/master/resources/straffesager_1990_2024.csv"
 recidiv_data = pd.read_csv(url)
 
-risiko_faktorer = recidiv_data.groupby(['krimtype', 'tidligere_domme']).agg({
-    'dage_til_tilbagefald': 'median'
-})
+risiko_faktorer = recidiv_data.groupby(['krimtype', 'tidligere_domme']).agg(
+    median_dage=('dage_til_tilbagefald', 'median'),
+    antal_sager=('sag_id', 'count')
+)
 
 print(risiko_faktorer)
+```
 
-</textarea>
-<button class="run-button" onclick="runPython(document.getElementById('code6').value, 'output6')">
-  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
-</button>
-<button class="reset-button" onclick="resetPythonGlobals()">
-  <img src="resources/dust.png" alt="Python" style="height: 50px;">
-</button>
-</div>
-<div class="code-output" id="output6"></div>
-</div>
+:::
+
+### R
+
+::: {.kode-split}
+
+```{webr}
+#| autorun: false
+url <- "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/master/resources/straffesager_1990_2024.csv"
+recidiv_data <- read.csv(url)
+
+aggregate(
+  dage_til_tilbagefald ~ krimtype + tidligere_domme,
+  data = recidiv_data,
+  FUN = median
+)
+```
+
+:::
+
+:::
+
+Bemærk: `dage_til_tilbagefald` er tom for dem, der endnu ikke er faldet tilbage. Medianen beregnes altså kun blandt de tilbagefaldne — et godt afsæt til at tale om censurering.
 
 ## Eksempel på visualisering: Når [data] får koordinater
 
-<div class="code-container">
-<div class="code-input">
-<textarea class="python-editor" id="code7">
+::: {.panel-tabset}
 
+### Python
+
+```{pyodide}
+#| autorun: false
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.cluster import DBSCAN
-from io import StringIO
 
-url = "https://tinyurl.com/4r8tj95v"
-crime_data = pd.read_csv(url)  
+url = "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/master/resources/kriminalitet_koordinater.csv"
+crime_data = pd.read_csv(url)
 
-coords = crime_data[['latitude', 'longitude']]
-clusters = DBSCAN(eps=0.005, min_samples=2).fit(coords)
-
-# Visualiser på kort
-fig, ax = plt.subplots(figsize=(12, 8))
-
-scatter = ax.scatter(crime_data['longitude'], crime_data['latitude'], 
-                    c=clusters.labels_, 
-                    cmap='viridis', 
-                    alpha=0.7, 
-                    s=60, 
-                    edgecolors='black', 
-                    linewidth=0.5)
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.scatter(crime_data['longitude'], crime_data['latitude'],
+           alpha=0.7, s=60, edgecolors='black', linewidth=0.5)
 
 ax.set_xlabel('Longitude')
 ax.set_ylabel('Latitude')
-ax.set_title('Kriminalitets Hot Spots\n(Farver viser clusters)')
+ax.set_title('Kriminalitet med koordinater')
 ax.grid(True, alpha=0.3)
-
-# Tilføj colorbar
-cbar = plt.colorbar(scatter)
-cbar.set_label('Cluster ID (-1 = støj/outliers)')
 
 plt.tight_layout()
 plt.show()
+```
 
-</textarea>
-<button class="run-button" onclick="runPython(document.getElementById('code7').value, 'output7')">
-  <img src="resources/python-file.png" alt="Python" style="height: 50px;">
-</button>
-<button class="reset-button" onclick="resetPythonGlobals()">
-  <img src="resources/dust.png" alt="Python" style="height: 50px;">
-</button>
-</div>
-<div class="code-output" id="output7"></div>
-</div>
+### R
+
+```{webr}
+#| autorun: false
+url <- "https://raw.githubusercontent.com/jeppeFQ/sds1-lektion-1/master/resources/kriminalitet_koordinater.csv"
+crime_data <- read.csv(url)
+
+plot(
+  crime_data$longitude, crime_data$latitude,
+  xlab = "Longitude", ylab = "Latitude",
+  main = "Kriminalitet med koordinater",
+  pch = 21, bg = "steelblue"
+)
+grid()
+```
+
+:::
 
 ------>
 

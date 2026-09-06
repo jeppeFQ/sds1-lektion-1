@@ -42,11 +42,11 @@
     "text": "“Kodning” vs. Excel\nReproducerbar, skalerbar, fleksibel og automatisering!\nNår Excel kommer til kort:\n\nAnalysere 100.000-vis af rækker data.\nGentage den samme analyse hver [dag/måned/år] med nye data.\n\nI Excel: hvis data ændrer sig, skal vi gentage alle klik.\n\nDokumentere præcist, hvad vi har gjort, så en kollega kan gentage det.\nKombinere data fra [mange] forskellige kilder.\nLave avancerede statistiske modeller."
   },
   {
-    "objectID": "index.html#python-et-kodesprog",
-    "href": "index.html#python-et-kodesprog",
+    "objectID": "index.html#et-kodesprog",
+    "href": "index.html#et-kodesprog",
     "title": "Første møde med Messy Data og Python",
-    "section": "Python; et kodesprog",
-    "text": "Python; et kodesprog\n\nTænk på kodning som en meget detaljeret opskrift. Så fremfor en abstract “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\n\n# Hent biblioteker\nimport pandas as pd\n\n# Hent data fra URL\nurl = \"https://tinyurl.com/3p843y7k\"\ndata = pd.read_csv(url)\n\n# Beregn gennemsnit for hver måned\nmonthly_average = data.groupby('month')['sales'].mean()\nprint(\"\\nMånedlige gennemsnit:\")\nprint(monthly_average)"
+    "section": "Et kodesprog",
+    "text": "Et kodesprog\n\nTænk på kodning som en meget detaljeret opskrift. Fremfor en abstrakt “bland ingredienserne” (Excel; peg-og-klik), skriver vi:\n\nPythonR"
   },
   {
     "objectID": "index.html#reproducerbar",
@@ -67,7 +67,7 @@
     "href": "index.html#fleksibilitet",
     "title": "Første møde med Messy Data og Python",
     "section": "Fleksibilitet",
-    "text": "Fleksibilitet\nPython har tusindvis af specialiserede “værktøjskasser” (biblioteker) til alt fra grundlæggende statistik og datahåndtering til machine learning og kunstig intelligens."
+    "text": "Fleksibilitet\nPython og R har tusindvis af specialiserede “værktøjskasser” (biblioteker/pakker) til alt fra grundlæggende statistik og datahåndtering til machine learning og kunstig intelligens."
   },
   {
     "objectID": "index.html#automatisering",
